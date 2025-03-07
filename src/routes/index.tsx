@@ -71,7 +71,7 @@ const protectedRoutes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <Navigate to="/lms/dashboard" replace />,
+        element: <Navigate to="/lms/login" replace />,
       },
       // LMS Module Routes
       {
@@ -182,6 +182,12 @@ const publicRoutes: RouteObject[] = [
   },
 ];
 
+// Redirect root to login
+const rootRoute: RouteObject = {
+    path: "/",
+    element: <Navigate to="/login" replace />
+  };
+
 // 404 route
 const notFoundRoute: RouteObject = {
   path: "*",
@@ -189,7 +195,8 @@ const notFoundRoute: RouteObject = {
 };
 
 const routes: RouteObject[] = [
-  ...publicRoutes,
+  rootRoute,
+    ...publicRoutes,
   ...protectedRoutes,
   notFoundRoute,
 ];
