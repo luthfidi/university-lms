@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import Sidebar from "@/components/organisms/sidebar/Sidebar";
 import Navbar from "@/components/organisms/sidebar/Navbar";
@@ -13,8 +13,11 @@ const SIDEBAR_COLLAPSED_WIDTH = "70px";
 const NAVBAR_HEIGHT = "64px";
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  // Use responsive background color based on color mode
+  const bgColor = useColorModeValue("gray.50", "gray.900");
+
   return (
-    <Flex h="100vh" bg="gray.50">
+    <Flex h="100vh" bg={bgColor}>
       {/* Sidebar */}
       <Sidebar width={SIDEBAR_WIDTH} collapsedWidth={SIDEBAR_COLLAPSED_WIDTH} />
 
