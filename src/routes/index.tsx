@@ -71,7 +71,7 @@ const protectedRoutes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <Navigate to="/lms/login" replace />,
+        element: <Navigate to="/login" replace />,
       },
       // LMS Module Routes
       {
