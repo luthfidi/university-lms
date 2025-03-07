@@ -418,7 +418,7 @@ const getStatusColor = (status: string) => {
 };
 
 // Helper function to get participant display name for conversation
-const getConversationName = (conversation: any, currentUserId: string) => {
+const getConversationName = (conversation: any, _currentUserId: string) => {
   if (conversation.isGroup) {
     return conversation.groupName;
   }

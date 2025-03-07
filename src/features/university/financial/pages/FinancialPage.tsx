@@ -289,7 +289,7 @@ const getDaysUntilDue = (dueDate: string) => {
 };
 
 const FinancialPage = () => {
-  const { user } = useAuthStore();
+  const {  } = useAuthStore();
   const [selectedPeriod, setSelectedPeriod] = useState(
     "Odd Semester 2024/2025"
   );

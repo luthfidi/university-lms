@@ -394,7 +394,7 @@ const AssessmentResultPage = () => {
               Quiz Questions
             </Heading>
             <Accordion allowMultiple>
-              {quizResultData.questions.map((question, index) => (
+              {quizResultData.questions.map((question, ) => (
                 <AccordionItem key={question.id}>
                   <h2>
                     <AccordionButton>

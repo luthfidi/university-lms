@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   Box,
   Heading,
@@ -183,8 +183,7 @@ const formatDate = (dateString: string) => {
 };
 
 const ForumDetailPage = () => {
-  const { topicId } = useParams<{ topicId: string }>();
-  const navigate = useNavigate();
+  const {  } = useParams<{ topicId: string }>();
   const [replyText, setReplyText] = useState("");
   const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
 

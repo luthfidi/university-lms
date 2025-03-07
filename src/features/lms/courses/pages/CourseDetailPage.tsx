@@ -255,8 +255,8 @@ const formatTime = (dateString: string) => {
 };
 
 const CourseDetailPage = () => {
-  const { courseId } = useParams<{ courseId: string }>();
-  const [activeTab, setActiveTab] = useState(0);
+  const {  } = useParams<{ courseId: string }>();
+  const [, setActiveTab] = useState(0);
   
   const cardBg = useColorModeValue('white', 'gray.800');
   const borderColor = useColorModeValue('gray.200', 'gray.700');

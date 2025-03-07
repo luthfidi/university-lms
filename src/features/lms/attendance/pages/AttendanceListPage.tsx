@@ -41,7 +41,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   MdQrCode,
   MdWifi,
@@ -238,7 +237,6 @@ const getMethodIcon = (method: string) => {
 };
 
 const AttendanceListPage = () => {
-  const navigate = useNavigate();
   const [selectedCourse, setSelectedCourse] = useState(coursesData[0].id);
   const { isOpen, onOpen, onClose } = useDisclosure();
   // Fix: Specify the FocusableElement type for the ref

@@ -9,10 +9,10 @@
 
     /* Bundler mode */
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
-    "noEmit": true,
+    "noEmit": false, // Ubah ke false
+    "outDir": "./dist", // Tambahkan outDir
 
     /* Linting */
     "strict": true,

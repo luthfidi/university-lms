@@ -217,7 +217,7 @@ const academicRequirements = {
 };
 
 const KRSPage = () => {
-  const { user } = useAuthStore();
+  const {  } = useAuthStore();
   const [activePeriod, setActivePeriod] = useState(academicPeriods[0]);
   const [courseSelections, setCourseSelections] = useState<
     typeof availableCourses
