@@ -1,4 +1,10 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme, ThemeConfig } from "@chakra-ui/react";
+
+// Add color mode config
+const config: ThemeConfig = {
+  initialColorMode: "light",
+  useSystemColorMode: false,
+};
 
 const colors = {
   brand: {
@@ -40,7 +46,7 @@ const colors = {
     },
   },
   gray: {
-    50: "#171923", // error color
+    50: "#F7FAFC",
     100: "#EDF2F7",
     200: "#E2E8F0",
     300: "#CBD5E0",
@@ -109,6 +115,16 @@ const space = {
   72: "18rem",
   80: "20rem",
   96: "24rem",
+};
+
+// Styles for dark mode and light mode
+const styles = {
+  global: (props: { colorMode: "light" | "dark" }) => ({
+    body: {
+      bg: props.colorMode === "dark" ? "gray.800" : "gray.50",
+      color: props.colorMode === "dark" ? "white" : "gray.800",
+    },
+  }),
 };
 
 // Component specific styling
@@ -186,20 +202,22 @@ const components = {
     },
   },
   Sidebar: {
-    baseStyle: {
-      bg: "white",
+    baseStyle: (props: { colorMode: "light" | "dark" }) => ({
+      bg: props.colorMode === "dark" ? "gray.800" : "white",
       borderRight: "1px",
-      borderColor: "gray.100",
-    },
+      borderColor: props.colorMode === "dark" ? "gray.700" : "gray.100",
+    }),
   },
 };
 
 const theme = extendTheme({
+  config,
   colors,
   fonts,
   breakpoints,
   shadows,
   space,
+  styles,
   components,
 });
 

@@ -19,6 +19,7 @@ import { BellIcon, SettingsIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/store/authStore";
 import { AppModule } from "@/types/global";
+import ThemeToggleButton from "./ThemeToggleButton"; // Import the new component
 
 interface NavbarProps {
   marginLeft: string;
@@ -90,6 +91,9 @@ const Navbar: React.FC<NavbarProps> = ({ marginLeft }) => {
 
         {/* Right-side actions */}
         <Flex align="center" gap={4}>
+          {/* Theme Toggle Button */}
+          <ThemeToggleButton />
+
           {/* Notifications */}
           <Menu>
             <MenuButton
