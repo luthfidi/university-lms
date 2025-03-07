@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Box,
   VStack,
@@ -8,6 +7,7 @@ import {
   Divider,
   IconButton,
   useColorModeValue,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useNavigate, useLocation } from "react-router-dom";
 import useNavigation from "@/hooks/useNavigation";
@@ -18,10 +18,16 @@ import NavItem from "./NavItem";
 interface SidebarProps {
   width: string;
   collapsedWidth: string;
+  isCollapsed: boolean;
+  onToggleCollapse: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ width, collapsedWidth }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+const Sidebar: React.FC<SidebarProps> = ({ 
+  width, 
+  collapsedWidth, 
+  isCollapsed, 
+  onToggleCollapse 
+}) => {
   const navigation = useNavigation();
   const { user } = useAuthStore();
   const navigate = useNavigate();
@@ -29,6 +35,8 @@ const Sidebar: React.FC<SidebarProps> = ({ width, collapsedWidth }) => {
 
   const bgColor = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.100", "gray.700");
+  const textColor = useColorModeValue("gray.700", "gray.200");
+  const secondaryTextColor = useColorModeValue("gray.500", "gray.400");
 
   if (!user) return null;
 
@@ -45,7 +53,7 @@ const Sidebar: React.FC<SidebarProps> = ({ width, collapsedWidth }) => {
       bg={bgColor}
       borderRight="1px"
       borderColor={borderColor}
-      transition="width 0.2s ease"
+      transition="width 0.3s ease"
       zIndex={10}
       overflowX="hidden"
       boxShadow="sm"
@@ -66,10 +74,10 @@ const Sidebar: React.FC<SidebarProps> = ({ width, collapsedWidth }) => {
             />
             {!isCollapsed && (
               <Box>
-                <Text fontWeight="bold" noOfLines={1}>
+                <Text fontWeight="bold" noOfLines={1} color={textColor}>
                   {user.firstName} {user.lastName}
                 </Text>
-                <Text fontSize="sm" color="gray.500" noOfLines={1}>
+                <Text fontSize="sm" color={secondaryTextColor} noOfLines={1}>
                   {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
                 </Text>
               </Box>
@@ -96,14 +104,20 @@ const Sidebar: React.FC<SidebarProps> = ({ width, collapsedWidth }) => {
 
         {/* Collapse Toggle */}
         <Box px={4}>
-          <IconButton
-            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-            icon={isCollapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            variant="ghost"
-            size="sm"
-            width="full"
-          />
+          <Tooltip 
+            label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"} 
+            placement={isCollapsed ? "right" : "top"}
+            hasArrow
+          >
+            <IconButton
+              aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+              icon={isCollapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+              onClick={onToggleCollapse}
+              variant="ghost"
+              size="sm"
+              width="full"
+            />
+          </Tooltip>
         </Box>
       </VStack>
     </Box>
