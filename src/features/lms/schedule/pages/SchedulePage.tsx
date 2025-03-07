@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import {
   Box,
   Heading,
@@ -16,8 +16,6 @@ import {
   List,
   ListItem,
   Divider,
-  Select,
-  Tooltip,
   useDisclosure,
   Modal,
   ModalOverlay,
@@ -31,14 +29,12 @@ import {
   CalendarIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  InfoIcon,
 } from "@chakra-ui/icons";
 import {
   MdLocationOn,
   MdPerson,
   MdAccessTime,
   MdBook,
-  MdSchool,
   MdEvent,
   MdLayers,
   MdViewWeek,
@@ -48,7 +44,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { DateSelectArg, EventClickArg, EventInput } from "@fullcalendar/core";
+import { EventClickArg, EventInput } from "@fullcalendar/core";
 
 // Mock data for schedule
 const scheduleEvents: EventInput[] = [
@@ -246,7 +242,17 @@ const SchedulePage = () => {
 
   // Handle event click
   const handleEventClick = (info: EventClickArg) => {
-    setSelectedEvent(info.event);
+    const plainEvent: EventInput = {
+      id: info.event.id,
+      title: info.event.title,
+      start: info.event.startStr,
+      end: info.event.endStr,
+      backgroundColor: info.event.backgroundColor,
+      borderColor: info.event.borderColor,
+      extendedProps: info.event.extendedProps,
+      display: info.event.display,
+    };
+    setSelectedEvent(plainEvent);
     onOpen();
   };
 

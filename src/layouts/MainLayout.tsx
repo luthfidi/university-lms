@@ -1,7 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import Sidebar from "@/components/organisms/Sidebar/Sidebar";
-import Navbar from "@/components/organisms/Navbar/Navbar";
+import Navbar from "@/components/organisms/Sidebar/Navbar";
 
 interface MainLayoutProps {
   children: ReactNode;

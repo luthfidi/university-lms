@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { User, UserRole, AppModule } from "@/types/global";
+import { User, AppModule } from "@/types/global";
 
 interface AuthState {
   isAuthenticated: boolean;

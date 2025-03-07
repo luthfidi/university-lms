@@ -54,9 +54,6 @@ import {
 } from "@chakra-ui/react";
 import {
   ChevronRightIcon,
-  InfoIcon,
-  WarningIcon,
-  CheckIcon,
   TimeIcon,
   AttachmentIcon,
 } from "@chakra-ui/icons";
@@ -261,7 +258,7 @@ const AssessmentDetailPage = () => {
   const [selectedAnswers, setSelectedAnswers] = useState<
     Record<string, string>
   >({});
-  const [quizTime, setQuizTime] = useState(quizData.timeLimit * 60); // in seconds
+  const [quizTime, ] = useState(quizData.timeLimit * 60); // in seconds
   const [quizStarted, setQuizStarted] = useState(false);
 
   // Modal control

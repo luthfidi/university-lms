@@ -5,7 +5,6 @@ import {
   Text,
   Card,
   CardBody,
-  SimpleGrid,
   Flex,
   HStack,
   VStack,
@@ -35,15 +34,9 @@ import {
 } from "@chakra-ui/react";
 import {
   SearchIcon,
-  InfoIcon,
   BellIcon,
-  LockIcon,
-  UnlockIcon,
 } from "@chakra-ui/icons";
 import {
-  MdModeEdit,
-  MdDelete,
-  MdNotifications,
   MdAttachFile,
   MdOpenInNew,
 } from "react-icons/md";

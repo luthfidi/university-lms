@@ -40,7 +40,7 @@ const colors = {
     },
   },
   gray: {
-    50: "#F7FAFC",
+    50: "#171923", // error color
     100: "#EDF2F7",
     200: "#E2E8F0",
     300: "#CBD5E0",

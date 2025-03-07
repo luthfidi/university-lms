@@ -1,4 +1,4 @@
-import { Navigate, RouteObject } from "react-router-dom";
+import { Navigate, Outlet, RouteObject } from "react-router-dom";
 import MainLayout from "@/layouts/MainLayout";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import StudentLMSDashboard from "@/features/lms/dashboard/pages/StudentDashboard";
@@ -63,7 +63,11 @@ const DashboardRouter = ({
 const protectedRoutes: RouteObject[] = [
   {
     path: "/",
-    element: <MainLayout />,
+    element: (
+      <MainLayout>
+        <Outlet />
+      </MainLayout>
+    ),
     children: [
       {
         index: true,

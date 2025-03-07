@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { NavItem, UserRole, AppModule } from "@/types/global";
+import { NavItem } from "@/types/global";
 import useAuthStore from "@/store/authStore";
 
 // Navigation configuration

@@ -15,7 +15,7 @@ import {
   FormLabel,
   HStack,
 } from "@chakra-ui/react";
-import { BellIcon, SettingsIcon, ExternalLinkIcon } from "@chakra-ui/icons";
+import { BellIcon, SettingsIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/store/authStore";
 import { AppModule } from "@/types/global";

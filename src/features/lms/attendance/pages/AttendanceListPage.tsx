@@ -241,7 +241,8 @@ const AttendanceListPage = () => {
   const navigate = useNavigate();
   const [selectedCourse, setSelectedCourse] = useState(coursesData[0].id);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = useRef<HTMLButtonElement>(null);
+  // Fix: Specify the FocusableElement type for the ref
+  const cancelRef = useRef(null);
 
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.700");
@@ -758,7 +759,7 @@ const AttendanceListPage = () => {
       {/* Check-in Modal */}
       <AlertDialog
         isOpen={isOpen}
-        leastDestructiveRef={cancelRef}
+        leastDestructiveRef={cancelRef as any}
         onClose={onClose}
       >
         <AlertDialogOverlay>

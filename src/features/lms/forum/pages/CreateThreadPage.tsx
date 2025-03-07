@@ -27,7 +27,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
-import { MdClass, MdForum } from "react-icons/md";
+import { MdClass } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";

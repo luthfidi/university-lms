@@ -26,16 +26,10 @@ import {
   Tr,
   Th,
   Td,
-  Link,
   Select,
   Progress,
   IconButton,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   Divider,
-  Tooltip,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -49,21 +43,18 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Icon,
+  Input,
+  Textarea,
 } from "@chakra-ui/react";
 import {
-  ChevronDownIcon,
   DownloadIcon,
   ExternalLinkIcon,
-  InfoIcon,
 } from "@chakra-ui/icons";
 import {
   MdOutlinePayment,
-  MdAttachMoney,
   MdReceipt,
-  MdHistory,
-  MdSchool,
   MdAccountBalance,
-  MdPictureAsPdf,
   MdCreditCard,
   MdPayment,
   MdOutlineFileUpload,
@@ -1063,7 +1054,7 @@ const FinancialPage = () => {
                               Valid Until:
                             </Text>
                             <Text fontSize="sm">
-                              {formatDate(method.details.expiryDate)}
+                              {method.details.supportedCards?.join(", ") || ""}
                             </Text>
                           </Flex>
                         </VStack>
@@ -1076,7 +1067,9 @@ const FinancialPage = () => {
                               Supported Cards:
                             </Text>
                             <Text fontSize="sm">
-                              {method.details.supportedCards.join(", ")}
+                              {method.details.supportedCards
+                                ? method.details.supportedCards.join(", ")
+                                : ""}
                             </Text>
                           </Flex>
                           <Flex justify="space-between">

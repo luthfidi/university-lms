@@ -27,12 +27,6 @@ import {
   TabPanels,
   Tabs,
   Tab,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Tooltip,
   Grid,
   GridItem,
   Icon,
@@ -48,15 +42,9 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  MdInfo,
   MdTrendingUp,
   MdBook,
-  MdAssignment,
-  MdQuiz,
-  MdSchool,
   MdBarChart,
-  MdCheck,
-  MdClose,
   MdList,
 } from "react-icons/md";
 import {

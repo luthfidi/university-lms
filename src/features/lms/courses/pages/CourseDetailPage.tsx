@@ -31,7 +31,7 @@ import {
   BreadcrumbLink,
 } from '@chakra-ui/react';
 import { ChevronRightIcon, DownloadIcon, ExternalLinkIcon } from '@chakra-ui/icons';
-import { MdCheckCircle, MdAccessTime, MdPictureAsPdf, MdSlideshow, MdVideoLibrary, MdAssignment, MdForum, MdPeople } from 'react-icons/md';
+import { MdCheckCircle, MdAccessTime, MdPictureAsPdf, MdSlideshow, MdVideoLibrary, MdForum, MdPeople } from 'react-icons/md';
 
 // Mock data for a specific course
 const courseData = {

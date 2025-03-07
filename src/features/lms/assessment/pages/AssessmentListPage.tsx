@@ -18,7 +18,6 @@ import {
   Progress,
   Stat,
   StatLabel,
-  StatNumber,
   StatHelpText,
   Tabs,
   TabList,

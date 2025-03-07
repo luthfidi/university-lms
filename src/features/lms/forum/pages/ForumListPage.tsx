@@ -8,13 +8,10 @@ import {
   Flex,
   HStack,
   Badge,
-  Button,
   Input,
   InputGroup,
   InputLeftElement,
-  Link,
   Avatar,
-  AvatarGroup,
   VStack,
   Icon,
   useColorModeValue,
@@ -22,7 +19,7 @@ import {
   Divider,
   Tooltip,
 } from "@chakra-ui/react";
-import { SearchIcon, AddIcon, ExternalLinkIcon } from "@chakra-ui/icons";
+import { SearchIcon} from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { MdForum, MdChat, MdPeople, MdClass } from "react-icons/md";
 

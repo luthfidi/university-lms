@@ -4,7 +4,6 @@ import {
   GridItem,
   Heading,
   Text,
-  SimpleGrid,
   Card,
   CardHeader,
   CardBody,
@@ -16,11 +15,9 @@ import {
   Progress,
   Flex,
   Avatar,
-  Divider,
   List,
   ListItem,
   ListIcon,
-  IconButton,
   useColorModeValue,
 } from "@chakra-ui/react";
 import {
@@ -30,7 +27,7 @@ import {
   WarningIcon,
 } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
-import { MdAssignment, MdBook, MdEvent, MdForum } from "react-icons/md";
+import { MdAssignment, MdBook, MdEvent } from "react-icons/md";
 import useAuthStore from "@/store/authStore";
 
 // Mock data for dashboard

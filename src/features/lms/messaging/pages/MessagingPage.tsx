@@ -3,8 +3,6 @@ import {
   Box,
   Heading,
   Text,
-  Card,
-  CardBody,
   Flex,
   HStack,
   VStack,
@@ -30,7 +28,6 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   useDisclosure,
-  Tooltip,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -38,27 +35,16 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
   Textarea,
-  Tag,
   Drawer,
   DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
   DrawerOverlay,
   DrawerContent,
-  DrawerCloseButton,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import {
   SearchIcon,
-  InfoIcon,
-  ChevronDownIcon,
-  CloseIcon,
+
   AttachmentIcon,
   CheckIcon,
 } from "@chakra-ui/icons";
@@ -69,17 +55,11 @@ import {
   MdArchive,
   MdPerson,
   MdGroup,
-  MdPeopleOutline,
   MdPersonAdd,
   MdOutlineEmojiEmotions,
   MdOutlinePushPin,
   MdArrowBack,
   MdContentCopy,
-  MdEdit,
-  MdFilterList,
-  MdRefresh,
-  MdOutlineForward,
-  MdOutlineReply,
 } from "react-icons/md";
 import useAuthStore from "@/store/authStore";
 
@@ -1010,7 +990,7 @@ const MessagingPage = () => {
       {/* Delete Confirmation Dialog */}
       <AlertDialog
         isOpen={isDeleteDialogOpen}
-        leastDestructiveRef={cancelRef}
+        leastDestructiveRef={cancelRef as any}
         onClose={onDeleteDialogClose}
       >
         <AlertDialogOverlay>
