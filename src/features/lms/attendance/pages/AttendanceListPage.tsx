@@ -448,7 +448,7 @@ const AttendanceListPage = () => {
                 </HStack>
                 <HStack alignItems="flex-start">
                   <Icon as={MdWarning} color="yellow.500" mt={1} />
-                  <Text fontSize="sm" color="gray.600">
+                  <Text fontSize="sm" color={useColorModeValue("red.400", "red.300")}>
                     {requirements?.policy ||
                       "Students must attend at least 80% of sessions to be eligible for the final exam."}
                   </Text>

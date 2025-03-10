@@ -220,6 +220,7 @@ const SchedulePage = () => {
 
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.700");
+  const listItemHoverBg = useColorModeValue("gray.50", "gray.700");
 
   // Format date for display
   const formatDate = (dateString: string) => {
@@ -397,6 +398,17 @@ const SchedulePage = () => {
                   ".fc-timegrid-event-harness": {
                     zIndex: 1, // Ensure events don't appear behind grid lines
                   },
+                  ".fc-col-header-cell-cushion, .fc-daygrid-day-number, .fc-list-day-text, .fc-list-day-side-text":
+                    {
+                      color: useColorModeValue("gray.800", "gray.100"),
+                    },
+                  ".fc-day-header, .fc-day-number, .fc-list-day-text, .fc-list-day-side-text":
+                    {
+                      color: useColorModeValue("gray.800", "gray.200"),
+                    },
+                  ".fc-day-header a, .fc-day-number a": {
+                    color: "inherit",
+                  },
                 }}
               >
                 <FullCalendar
@@ -489,7 +501,8 @@ const SchedulePage = () => {
                     borderWidth="1px"
                     borderRadius="md"
                     borderColor={borderColor}
-                    _hover={{ bg: "gray.50" }}
+                    bg={cardBg}
+                    _hover={{ bg: listItemHoverBg }}
                   >
                     <VStack align="stretch" spacing={1}>
                       <HStack justify="space-between">

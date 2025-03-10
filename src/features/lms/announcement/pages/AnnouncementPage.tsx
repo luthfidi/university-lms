@@ -32,14 +32,8 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  SearchIcon,
-  BellIcon,
-} from "@chakra-ui/icons";
-import {
-  MdAttachFile,
-  MdOpenInNew,
-} from "react-icons/md";
+import { SearchIcon, BellIcon } from "@chakra-ui/icons";
+import { MdAttachFile, MdOpenInNew } from "react-icons/md";
 
 // Mock data for announcements
 const announcementData = [
@@ -353,7 +347,11 @@ const AnnouncementPage = () => {
                         {announcement.title}
                       </Heading>
 
-                      <Text noOfLines={2} color="gray.600" mb={4}>
+                      <Text
+                        noOfLines={2}
+                        color={useColorModeValue("gray.600", "gray.300")}
+                        mb={4}
+                      >
                         {announcement.content}
                       </Text>
 
@@ -448,7 +446,11 @@ const AnnouncementPage = () => {
                           {announcement.title}
                         </Heading>
 
-                        <Text noOfLines={2} color="gray.600" mb={4}>
+                        <Text
+                          noOfLines={2}
+                          color={useColorModeValue("gray.600", "gray.300")}
+                          mb={4}
+                        >
                           {announcement.content}
                         </Text>
 
@@ -548,7 +550,11 @@ const AnnouncementPage = () => {
                           {announcement.title}
                         </Heading>
 
-                        <Text noOfLines={2} color="gray.600" mb={4}>
+                        <Text
+                          noOfLines={2}
+                          color={useColorModeValue("gray.600", "gray.300")}
+                          mb={4}
+                        >
                           {announcement.content}
                         </Text>
 

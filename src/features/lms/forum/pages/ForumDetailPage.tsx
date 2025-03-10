@@ -25,11 +25,7 @@ import {
   MenuList,
   MenuItem,
 } from "@chakra-ui/react";
-import {
-  ChevronRightIcon,
-  AddIcon,
-  SettingsIcon,
-} from "@chakra-ui/icons";
+import { ChevronRightIcon, AddIcon, SettingsIcon } from "@chakra-ui/icons";
 import {
   MdClass,
   MdReply,
@@ -183,14 +179,23 @@ const formatDate = (dateString: string) => {
 };
 
 const ForumDetailPage = () => {
-  const {  } = useParams<{ topicId: string }>();
+  const {} = useParams<{ topicId: string }>();
   const [replyText, setReplyText] = useState("");
   const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
 
+  // Color mode values
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.700");
   const announcementBg = useColorModeValue("red.50", "red.900");
   const pinnedBg = useColorModeValue("yellow.50", "yellow.900");
+  const textColor = useColorModeValue("gray.600", "gray.300");
+  const headingColor = useColorModeValue("gray.800", "white");
+  const sectionBg = useColorModeValue("brand.primary.50", "brand.primary.900");
+  const sectionColor = useColorModeValue(
+    "brand.primary.600",
+    "brand.primary.200"
+  );
+  const replyBg = useColorModeValue("gray.50", "gray.700");
 
   // For a real app, we would fetch the forum topic data based on topicId
   const topic = forumTopicData; // Using mock data
@@ -201,11 +206,6 @@ const ForumDetailPage = () => {
     if (!a.isPinned && b.isPinned) return 1;
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
-
-  const handleCreateThread = () => {
-    // In a real app, this would navigate to a thread creation form
-    alert("Navigate to create thread page");
-  };
 
   const handleSubmitReply = (threadId: string) => {
     if (!replyText.trim()) return;
@@ -225,15 +225,20 @@ const ForumDetailPage = () => {
         mb={6}
       >
         <BreadcrumbItem>
-          <BreadcrumbLink href="/lms/forum">Forums</BreadcrumbLink>
+          <BreadcrumbLink href="/lms/forum" color={textColor}>
+            Forums
+          </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
-          <BreadcrumbLink href={`/lms/courses/${topic.courseId}`}>
+          <BreadcrumbLink
+            href={`/lms/courses/${topic.courseId}`}
+            color={textColor}
+          >
             {topic.courseCode}
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem isCurrentPage>
-          <BreadcrumbLink>{topic.title}</BreadcrumbLink>
+          <BreadcrumbLink color={textColor}>{topic.title}</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
 
@@ -241,25 +246,25 @@ const ForumDetailPage = () => {
       <Flex
         align="center"
         mb={6}
-        bg="brand.primary.50"
+        bg={sectionBg}
         p={4}
         borderRadius="md"
         borderLeftWidth="4px"
         borderLeftColor="brand.primary.500"
       >
-        <Icon as={MdClass} boxSize={6} color="brand.primary.600" mr={3} />
+        <Icon as={MdClass} boxSize={6} color={sectionColor} mr={3} />
         <Box flex="1">
           <HStack mb={1}>
-            <Heading size="md" color="brand.primary.700">
+            <Heading size="md" color={sectionColor}>
               {topic.courseCode}
             </Heading>
-            <Text color="brand.primary.600">•</Text>
-            <Text color="brand.primary.600">{topic.courseName}</Text>
+            <Text color={sectionColor}>•</Text>
+            <Text color={sectionColor}>{topic.courseName}</Text>
           </HStack>
-          <Heading size="lg" mb={2}>
+          <Heading size="lg" mb={2} color={headingColor}>
             {topic.title}
           </Heading>
-          <Text color="gray.600">{topic.description}</Text>
+          <Text color={textColor}>{topic.description}</Text>
 
           {topic.isAssignment && topic.dueDate && (
             <Badge colorScheme="orange" mt={2}>
@@ -268,12 +273,7 @@ const ForumDetailPage = () => {
           )}
         </Box>
 
-        <Button
-          leftIcon={<AddIcon />}
-          colorScheme="blue"
-          onClick={handleCreateThread}
-          ml={4}
-        >
+        <Button leftIcon={<AddIcon />} colorScheme="blue" ml={4}>
           New Thread
         </Button>
       </Flex>
@@ -317,7 +317,9 @@ const ForumDetailPage = () => {
                     {thread.isPinned && (
                       <Badge colorScheme="yellow">Pinned</Badge>
                     )}
-                    <Heading size="md">{thread.title}</Heading>
+                    <Heading size="md" color={headingColor}>
+                      {thread.title}
+                    </Heading>
                   </HStack>
 
                   <Menu>
@@ -357,18 +359,20 @@ const ForumDetailPage = () => {
                   />
                   <Box>
                     <HStack>
-                      <Text fontWeight="bold">{thread.author.name}</Text>
+                      <Text fontWeight="bold" color={headingColor}>
+                        {thread.author.name}
+                      </Text>
                       {thread.author.role === "lecturer" && (
                         <Badge colorScheme="teal">Lecturer</Badge>
                       )}
                     </HStack>
-                    <Text fontSize="sm" color="gray.500">
+                    <Text fontSize="sm" color={textColor}>
                       {formatDate(thread.createdAt)}
                     </Text>
                   </Box>
                 </HStack>
 
-                <Text whiteSpace="pre-line" mb={4}>
+                <Text whiteSpace="pre-line" mb={4} color={textColor}>
                   {thread.content}
                 </Text>
 
@@ -388,7 +392,7 @@ const ForumDetailPage = () => {
               {thread.replies.length > 0 && (
                 <Box p={4} pt={0}>
                   <Divider mb={4} />
-                  <Heading size="sm" mb={4}>
+                  <Heading size="sm" mb={4} color={headingColor}>
                     Replies ({thread.replies.length})
                   </Heading>
 
@@ -408,7 +412,11 @@ const ForumDetailPage = () => {
                           />
                           <Box>
                             <HStack>
-                              <Text fontWeight="bold" fontSize="sm">
+                              <Text
+                                fontWeight="bold"
+                                fontSize="sm"
+                                color={headingColor}
+                              >
                                 {reply.author.name}
                               </Text>
                               {reply.author.role === "lecturer" && (
@@ -417,13 +425,18 @@ const ForumDetailPage = () => {
                                 </Badge>
                               )}
                             </HStack>
-                            <Text fontSize="xs" color="gray.500">
+                            <Text fontSize="xs" color={textColor}>
                               {formatDate(reply.createdAt)}
                             </Text>
                           </Box>
                         </HStack>
 
-                        <Text whiteSpace="pre-line" fontSize="sm" ml={10}>
+                        <Text
+                          whiteSpace="pre-line"
+                          fontSize="sm"
+                          ml={10}
+                          color={textColor}
+                        >
                           {reply.content}
                         </Text>
                       </Card>
@@ -434,8 +447,8 @@ const ForumDetailPage = () => {
 
               {/* Reply Form */}
               {activeThreadId === thread.id && (
-                <Box p={4} bg={useColorModeValue("gray.50", "gray.700")}>
-                  <Heading size="sm" mb={3}>
+                <Box p={4} bg={replyBg}>
+                  <Heading size="sm" mb={3} color={headingColor}>
                     Post a Reply
                   </Heading>
                   <Textarea
@@ -444,6 +457,7 @@ const ForumDetailPage = () => {
                     onChange={(e) => setReplyText(e.target.value)}
                     mb={3}
                     rows={4}
+                    bg={cardBg}
                   />
                   <HStack justify="flex-end" spacing={3}>
                     <Button

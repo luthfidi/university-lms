@@ -75,6 +75,7 @@ const NavItem: React.FC<NavItemProps> = ({
         align="center"
         px={3}
         py={2}
+        gap={2}
         cursor="pointer"
         role="group"
         fontWeight={isActive ? "semibold" : "normal"}

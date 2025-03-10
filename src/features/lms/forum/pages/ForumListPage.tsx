@@ -19,7 +19,7 @@ import {
   Divider,
   Tooltip,
 } from "@chakra-ui/react";
-import { SearchIcon} from "@chakra-ui/icons";
+import { SearchIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { MdForum, MdChat, MdPeople, MdClass } from "react-icons/md";
 
@@ -175,17 +175,31 @@ const formatDate = (dateString: string) => {
 
 const ForumListPage = () => {
   const navigate = useNavigate();
+
+  // Color mode values
   const cardBg = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.700");
+  const hoverBg = useColorModeValue("gray.50", "gray.700");
+  const hoverBorderColor = useColorModeValue(
+    "brand.primary.300",
+    "brand.primary.500"
+  );
+  const textColor = useColorModeValue("gray.600", "gray.300");
+  const headingColor = useColorModeValue("gray.800", "white");
+  const sectionBg = useColorModeValue("brand.primary.50", "brand.primary.900");
+  const sectionColor = useColorModeValue(
+    "brand.primary.600",
+    "brand.primary.200"
+  );
 
   return (
     <Box>
       {/* Page Header */}
       <Box mb={6}>
-        <Heading size="lg" mb={2}>
+        <Heading size="lg" mb={2} color={headingColor}>
           Forums
         </Heading>
-        <Text color="gray.500">
+        <Text color={textColor}>
           Participate in course discussions and collaborate with classmates
         </Text>
       </Box>
@@ -233,18 +247,18 @@ const ForumListPage = () => {
             <Flex
               align="center"
               mb={4}
-              bg="brand.primary.50"
+              bg={sectionBg}
               p={3}
               borderRadius="md"
               borderLeftWidth="4px"
               borderLeftColor="brand.primary.500"
             >
-              <Icon as={MdClass} boxSize={5} color="brand.primary.600" mr={2} />
+              <Icon as={MdClass} boxSize={5} color={sectionColor} mr={2} />
               <Box>
-                <Heading size="md" color="brand.primary.700">
+                <Heading size="md" color={sectionColor}>
                   {forum.courseCode}
                 </Heading>
-                <Text color="brand.primary.600">{forum.courseName}</Text>
+                <Text color={sectionColor}>{forum.courseName}</Text>
               </Box>
             </Flex>
 
@@ -258,11 +272,12 @@ const ForumListPage = () => {
                   boxShadow="sm"
                   borderRadius="lg"
                   _hover={{
-                    borderColor: "brand.primary.300",
+                    borderColor: hoverBorderColor,
                     boxShadow: "md",
                     transform: "translateY(-2px)",
                     transition: "all 0.2s ease-in-out",
                     cursor: "pointer",
+                    bg: hoverBg,
                   }}
                   onClick={() => navigate(`/lms/forum/${topic.id}`)}
                 >
@@ -271,7 +286,7 @@ const ForumListPage = () => {
                       <Flex justify="space-between" align="flex-start" mb={2}>
                         <Box>
                           <Flex align="center">
-                            <Heading size="sm" mb={1}>
+                            <Heading size="sm" mb={1} color={headingColor}>
                               {topic.title}
                             </Heading>
                             {topic.unreadCount > 0 && (
@@ -290,14 +305,24 @@ const ForumListPage = () => {
                             </Badge>
                           )}
                         </Box>
-                        <Icon as={MdForum} boxSize={5} color="gray.400" />
+                        <Icon as={MdForum} boxSize={5} color={textColor} />
                       </Flex>
 
-                      <Text fontSize="sm" mb={3} color="gray.600" noOfLines={2}>
+                      <Text
+                        fontSize="sm"
+                        mb={3}
+                        color={textColor}
+                        noOfLines={2}
+                      >
                         {topic.description}
                       </Text>
 
-                      <HStack mb={3} spacing={4} fontSize="sm" color="gray.500">
+                      <HStack
+                        mb={3}
+                        spacing={4}
+                        fontSize="sm"
+                        color={textColor}
+                      >
                         <Flex align="center">
                           <Icon as={MdChat} mr={1} />
                           <Text>{topic.threadCount} threads</Text>
@@ -318,10 +343,10 @@ const ForumListPage = () => {
                             src={topic.latestPost.avatar}
                           />
                           <Box fontSize="xs">
-                            <Text fontWeight="medium">
+                            <Text fontWeight="medium" color={headingColor}>
                               {topic.latestPost.author}
                             </Text>
-                            <Text color="gray.500">
+                            <Text color={textColor}>
                               {formatDate(topic.latestPost.date)}
                             </Text>
                           </Box>

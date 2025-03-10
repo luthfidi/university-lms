@@ -201,14 +201,20 @@ const StudentDashboard = () => {
                     {upcomingClasses.map((classItem) => (
                       <HStack
                         key={classItem.id}
-                        bg="gray.50"
+                        bg={useColorModeValue("gray.50", "gray.700")}
                         p={3}
                         borderRadius="md"
                         spacing={4}
                       >
                         <Flex
-                          bg="brand.primary.100"
-                          color="brand.primary.700"
+                          bg={useColorModeValue(
+                            "brand.primary.100",
+                            "brand.primary.900"
+                          )}
+                          color={useColorModeValue(
+                            "brand.primary.700",
+                            "brand.primary.200"
+                          )}  
                           p={3}
                           borderRadius="md"
                           alignItems="center"

@@ -1,92 +1,75 @@
-import { Box, Flex, useColorModeValue, IconButton, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Flex, useColorModeValue, useBreakpointValue } from "@chakra-ui/react";
 import { ReactNode, useState, useEffect } from "react";
 import Sidebar from "@/components/organisms/sidebar/Sidebar";
 import Navbar from "@/components/organisms/sidebar/Navbar";
-import { HamburgerIcon } from "@chakra-ui/icons";
 
 interface MainLayoutProps {
   children: ReactNode;
 }
 
 // Define constants for the sidebar dimensions
-const SIDEBAR_WIDTH = "260px";
-const SIDEBAR_COLLAPSED_WIDTH = "70px";
+const SIDEBAR_WIDTH = "240px";
+const SIDEBAR_MOBILE_WIDTH = "220px";
+// Define exact height for navbar and sidebar header
 const NAVBAR_HEIGHT = "64px";
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  // State for sidebar collapse
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  // State for sidebar visibility
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   
   // Use responsive background color based on color mode
   const bgColor = useColorModeValue("gray.50", "gray.900");
   
   // Detect if we're on mobile
-  const isMobile = useBreakpointValue({ base: true, md: false });
+  const isMobile = useBreakpointValue({ base: true, md: false }) || false;
   
-  // Auto-collapse on mobile
+  // Auto-hide sidebar on mobile
   useEffect(() => {
     if (isMobile) {
-      setIsCollapsed(true);
+      setIsSidebarVisible(false);
+    } else {
+      setIsSidebarVisible(true);
     }
   }, [isMobile]);
 
-  // Toggle sidebar collapse state
+  // Toggle sidebar visibility
   const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
+    setIsSidebarVisible(!isSidebarVisible);
   };
-  
-  // Handle mobile menu toggle
-  const toggleMobileNav = () => {
-    setIsMobileNavOpen(!isMobileNavOpen);
-  };
-
-  // Current sidebar width
-  const sidebarWidth = isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH;
 
   return (
     <Flex h="100vh" bg={bgColor}>
-      {/* Mobile menu toggle */}
-      {isMobile && (
-        <IconButton
-          aria-label="Toggle navigation"
-          icon={<HamburgerIcon />}
+      {/* Sidebar - conditionally rendered based on visibility */}
+      {isSidebarVisible && (
+        <Box 
           position="fixed"
-          top="12px"
-          left="12px"
+          left={0}
+          top={0}
+          bottom={0}
+          width={isMobile ? SIDEBAR_MOBILE_WIDTH : SIDEBAR_WIDTH}
           zIndex={20}
-          size="md"
-          variant="ghost"
-          onClick={toggleMobileNav}
-          display={{ base: "flex", md: "none" }}
-        />
+          transition="all 0.3s"
+        >
+          <Sidebar 
+            width={isMobile ? SIDEBAR_MOBILE_WIDTH : SIDEBAR_WIDTH}
+            onClose={toggleSidebar}
+            isMobile={isMobile ?? false}
+          />
+        </Box>
       )}
-  
-      {/* Sidebar */}
-      <Box
-        display={{ base: isMobileNavOpen ? "block" : "none", md: "block" }}
-        onClick={() => isMobile && setIsMobileNavOpen(false)}
-      >
-        <Sidebar 
-          width={SIDEBAR_WIDTH} 
-          collapsedWidth={SIDEBAR_COLLAPSED_WIDTH} 
-          isCollapsed={isCollapsed}
-          onToggleCollapse={toggleSidebar}
-        />
-      </Box>
 
       {/* Main content area */}
       <Box
-        ml={{ base: "0", md: sidebarWidth }}
-        w={{ base: "100%", md: `calc(100% - ${sidebarWidth})` }}
+        ml={{ base: 0, md: isSidebarVisible ? SIDEBAR_WIDTH : 0 }}
+        w="100%"
         h="full"
         position="relative"
         transition="margin-left 0.3s ease, width 0.3s ease"
       >
-        {/* Navbar */}
+        {/* Navbar with hamburger menu */}
         <Navbar 
-          marginLeft={{ base: "0", md: sidebarWidth }} 
-          isCollapsed={isCollapsed}
+          onToggleSidebar={toggleSidebar}
+          isSidebarVisible={isSidebarVisible}
         />
 
         {/* Page content */}

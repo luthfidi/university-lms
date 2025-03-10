@@ -52,11 +52,7 @@ import {
   Tooltip,
   useToast,
 } from "@chakra-ui/react";
-import {
-  ChevronRightIcon,
-  TimeIcon,
-  AttachmentIcon,
-} from "@chakra-ui/icons";
+import { ChevronRightIcon, TimeIcon, AttachmentIcon } from "@chakra-ui/icons";
 import {
   MdAssignment,
   MdQuiz,
@@ -258,7 +254,7 @@ const AssessmentDetailPage = () => {
   const [selectedAnswers, setSelectedAnswers] = useState<
     Record<string, string>
   >({});
-  const [quizTime, ] = useState(quizData.timeLimit * 60); // in seconds
+  const [quizTime] = useState(quizData.timeLimit * 60); // in seconds
   const [quizStarted, setQuizStarted] = useState(false);
 
   // Modal control
@@ -1002,7 +998,7 @@ const AssessmentDetailPage = () => {
       <Flex
         align="center"
         mb={6}
-        bg="brand.primary.50"
+        bg={useColorModeValue("brand.primary.50", "brand.primary.900")}
         p={4}
         borderRadius="md"
         borderLeftWidth="4px"
@@ -1011,14 +1007,28 @@ const AssessmentDetailPage = () => {
         <Icon
           as={getAssessmentIcon(assessment.type)}
           boxSize={6}
-          color="brand.primary.600"
+          color={useColorModeValue("brand.primary.600", "brand.primary.200")}
           mr={3}
         />
         <Box flex="1">
           <HStack mb={1}>
             <Badge colorScheme="blue">{assessment.courseCode}</Badge>
-            <Text color="brand.primary.600">•</Text>
-            <Text color="brand.primary.600">{assessment.courseName}</Text>
+            <Text
+              color={useColorModeValue(
+                "brand.primary.600",
+                "brand.primary.200"
+              )}
+            >
+              •
+            </Text>
+            <Text
+              color={useColorModeValue(
+                "brand.primary.600",
+                "brand.primary.200"
+              )}
+            >
+              {assessment.courseName}
+            </Text>
             <Badge
               colorScheme={
                 assessment.type === "assignment"
@@ -1032,7 +1042,11 @@ const AssessmentDetailPage = () => {
                 assessment.type.slice(1)}
             </Badge>
           </HStack>
-          <Heading size="lg" mb={1}>
+          <Heading
+            size="lg"
+            mb={1}
+            color={useColorModeValue("gray.800", "white")}
+          >
             {assessment.title}
           </Heading>
         </Box>

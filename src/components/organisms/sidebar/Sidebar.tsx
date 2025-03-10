@@ -1,123 +1,143 @@
 import {
   Box,
   VStack,
-  Avatar,
   Text,
   Flex,
-  Divider,
-  IconButton,
   useColorModeValue,
-  Tooltip,
+  Badge,
+  Button,
+  CloseButton,
 } from "@chakra-ui/react";
 import { useNavigate, useLocation } from "react-router-dom";
 import useNavigation from "@/hooks/useNavigation";
 import useAuthStore from "@/store/authStore";
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import NavItem from "./NavItem";
 
 interface SidebarProps {
   width: string;
-  collapsedWidth: string;
-  isCollapsed: boolean;
-  onToggleCollapse: () => void;
+  onClose: () => void;
+  isMobile: boolean;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ 
-  width, 
-  collapsedWidth, 
-  isCollapsed, 
-  onToggleCollapse 
-}) => {
+const Sidebar: React.FC<SidebarProps> = ({ width, onClose, isMobile }) => {
   const navigation = useNavigation();
-  const { user } = useAuthStore();
+  const { user, activeModule, setActiveModule } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
 
   const bgColor = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.100", "gray.700");
   const textColor = useColorModeValue("gray.700", "gray.200");
-  const secondaryTextColor = useColorModeValue("gray.500", "gray.400");
 
   if (!user) return null;
 
-  const currentWidth = isCollapsed ? collapsedWidth : width;
+  // Module switching is now handled directly in the buttons
 
   return (
     <Box
-      as="aside"
-      position="fixed"
-      left={0}
-      top={0}
-      bottom={0}
-      width={currentWidth}
+      width={width}
       bg={bgColor}
       borderRight="1px"
       borderColor={borderColor}
-      transition="width 0.3s ease"
-      zIndex={10}
-      overflowX="hidden"
       boxShadow="sm"
+      h="100vh"
+      overflowY="auto"
     >
-      <VStack spacing={6} align="stretch" h="full" py={4}>
-        {/* User Profile Section */}
-        <Box px={4}>
-          <Flex
-            direction={isCollapsed ? "column" : "row"}
-            align="center"
-            justify={isCollapsed ? "center" : "flex-start"}
-            gap={isCollapsed ? 2 : 4}
-          >
-            <Avatar
-              size={isCollapsed ? "sm" : "md"}
-              name={`${user.firstName} ${user.lastName}`}
-              src={user.profilePicture}
-            />
-            {!isCollapsed && (
-              <Box>
-                <Text fontWeight="bold" noOfLines={1} color={textColor}>
-                  {user.firstName} {user.lastName}
-                </Text>
-                <Text fontSize="sm" color={secondaryTextColor} noOfLines={1}>
-                  {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
-                </Text>
-              </Box>
-            )}
+      <VStack spacing={0} align="stretch" h="full">
+        {/* Header with Close Button - Exactly 64px height to match navbar */}
+        <Flex
+          h="64px"
+          px={4}
+          align="center"
+          justify="space-between"
+          borderBottomWidth="1px"
+          borderColor={borderColor}
+        >
+          {isMobile && <CloseButton p={5} onClick={onClose} />}
+          <Text fontSize="lg" fontWeight="bold" color="brand.primary.700">
+            University.com
+          </Text>
+        </Flex>
+
+        {/* User Role Section */}
+        <Box px={4} py={3} borderBottomWidth="1px" borderColor={borderColor}>
+          <Flex direction="column" align="flex-start">
+            <Badge
+              colorScheme="blue"
+              p={2}
+              borderRadius="md"
+              textAlign="center"
+              fontSize="sm"
+              mb={2}
+            >
+              Role: {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+            </Badge>
+
+            <Button
+              size="xs"
+              variant="outline"
+              onClick={() => console.log("Change role")}
+            >
+              Change Role
+            </Button>
           </Flex>
         </Box>
 
-        <Divider />
-
         {/* Navigation Links */}
-        <VStack spacing={1} align="stretch" flex="1" px={2}>
-          {navigation.map((item) => (
-            <NavItem
-              key={item.id}
-              icon={item.icon}
-              label={item.label}
-              path={item.path}
-              isActive={location.pathname.startsWith(item.path)}
-              isCollapsed={isCollapsed}
-              onClick={() => navigate(item.path)}
-            />
-          ))}
-        </VStack>
+        <Box flex="1" overflowY="auto" py={2} px={2}>
+          <VStack spacing={1} align="stretch">
+            {navigation.map((item) => (
+              <NavItem
+                key={item.id}
+                icon={item.icon}
+                label={item.label}
+                path={item.path}
+                isActive={location.pathname.startsWith(item.path)}
+                isCollapsed={false}
+                onClick={() => {
+                  navigate(item.path);
+                  if (isMobile) onClose();
+                }}
+              />
+            ))}
+          </VStack>
+        </Box>
 
-        {/* Collapse Toggle */}
-        <Box px={4}>
-          <Tooltip 
-            label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"} 
-            placement={isCollapsed ? "right" : "top"}
-            hasArrow
-          >
-            <IconButton
-              aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-              icon={isCollapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-              onClick={onToggleCollapse}
-              variant="ghost"
+        {/* Module Toggle - Bottom Section */}
+        <Box p={4} borderTopWidth="1px" borderColor={borderColor}>
+          <Text mb={2} fontSize="sm" fontWeight="medium" color={textColor}>
+            Switch Module:
+          </Text>
+          <Flex gap={2}>
+            <Button
               size="sm"
-              width="full"
-            />
-          </Tooltip>
+              colorScheme={activeModule === "lms" ? "blue" : "gray"}
+              variant={activeModule === "lms" ? "solid" : "outline"}
+              flex="1"
+              onClick={() => {
+                if (activeModule !== "lms") {
+                  setActiveModule("lms");
+                  navigate("/lms/dashboard");
+                }
+              }}
+            >
+              LMS
+            </Button>
+            <Button
+              size="sm"
+              colorScheme={activeModule === "university" ? "blue" : "gray"}
+              variant={activeModule === "university" ? "solid" : "outline"}
+              flex="1"
+              onClick={() => {
+                if (activeModule !== "university") {
+                  setActiveModule("university");
+                  navigate("/university/dashboard");
+                }
+              }}
+            >
+              University
+            </Button>
+          </Flex>
         </Box>
       </VStack>
     </Box>

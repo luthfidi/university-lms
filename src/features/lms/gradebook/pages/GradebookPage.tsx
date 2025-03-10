@@ -41,12 +41,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  MdTrendingUp,
-  MdBook,
-  MdBarChart,
-  MdList,
-} from "react-icons/md";
+import { MdTrendingUp, MdBook, MdBarChart, MdList } from "react-icons/md";
 import {
   LineChart,
   Line,
@@ -464,8 +459,12 @@ const GradebookPage = () => {
                     key={course.id}
                     onClick={() => setSelectedCourse(course.id)}
                     cursor="pointer"
-                    _hover={{ bg: "gray.50" }}
-                    bg={course.id === selectedCourse ? "blue.50" : undefined}
+                    _hover={{ bg: useColorModeValue("gray.50", "gray.700") }}
+                    bg={
+                      course.id === selectedCourse
+                        ? useColorModeValue("blue.50", "blue.900")
+                        : undefined
+                    }
                   >
                     <Td fontWeight="medium">{course.name}</Td>
                     <Td>{course.code}</Td>
@@ -526,17 +525,26 @@ const GradebookPage = () => {
           {/* Course Details Tab */}
           <TabPanel px={0} pt={5}>
             <Flex
+              align="center"
               mb={6}
-              bg="blue.50"
+              bg={useColorModeValue("blue.50", "blue.900")}
               p={4}
               borderRadius="md"
               borderLeftWidth="4px"
               borderLeftColor="blue.500"
             >
-              <Icon as={MdBook} boxSize={6} color="blue.600" mr={3} />
+              <Icon
+                as={MdBook}
+                boxSize={6}
+                color={useColorModeValue("blue.600", "blue.200")}
+                mr={3}
+              />
               <Box>
                 <HStack mb={1}>
-                  <Heading size="md" color="blue.700">
+                  <Heading
+                    size="md"
+                    color={useColorModeValue("blue.700", "blue.200")}
+                  >
                     {currentCourse.code}
                   </Heading>
                   <Badge
@@ -544,9 +552,15 @@ const GradebookPage = () => {
                   >
                     {currentCourse.type}
                   </Badge>
-                  <Text color="blue.600">{currentCourse.credits} Credits</Text>
+                  <Text color={useColorModeValue("blue.600", "blue.200")}>
+                    {currentCourse.credits} Credits
+                  </Text>
                 </HStack>
-                <Heading size="lg" mb={2}>
+                <Heading
+                  size="lg"
+                  mb={2}
+                  color={useColorModeValue("gray.800", "white")}
+                >
                   {currentCourse.name}
                 </Heading>
               </Box>
