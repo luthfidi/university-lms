@@ -726,8 +726,27 @@ const GradebookPage = () => {
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="name" />
                         <YAxis domain={[0, 100]} />
-                        <RechartsTooltip />
-                        <Legend />
+                        <RechartsTooltip
+                          contentStyle={{
+                            backgroundColor: useColorModeValue(
+                              "#fff",
+                              "#2D3748"
+                            ),
+                            borderColor: useColorModeValue("#ccc", "#4A5568"),
+                            color: useColorModeValue("#333", "#fff"),
+                          }}
+                          itemStyle={{
+                            color: useColorModeValue("#3182CE", "#3182CE"),
+                          }}
+                          labelStyle={{
+                            color: useColorModeValue("#333", "#fff"),
+                          }}
+                        />
+                        <Legend
+                          wrapperStyle={{
+                            color: useColorModeValue("#333", "#fff"),
+                          }}
+                        />
                         <Bar
                           name="Score (%)"
                           dataKey="score"
@@ -759,8 +778,27 @@ const GradebookPage = () => {
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="semester" />
                         <YAxis domain={[0, 4]} />
-                        <RechartsTooltip />
-                        <Legend />
+                        <RechartsTooltip
+                          contentStyle={{
+                            backgroundColor: useColorModeValue(
+                              "#fff",
+                              "#2D3748"
+                            ),
+                            borderColor: useColorModeValue("#ccc", "#4A5568"),
+                            color: useColorModeValue("#333", "#fff"),
+                          }}
+                          itemStyle={{
+                            color: useColorModeValue("#3182CE", "#3182CE"),
+                          }}
+                          labelStyle={{
+                            color: useColorModeValue("#333", "#fff"),
+                          }}
+                        />
+                        <Legend
+                          wrapperStyle={{
+                            color: useColorModeValue("#333", "#fff"),
+                          }}
+                        />
                         <Line
                           type="monotone"
                           dataKey="gpa"
@@ -811,15 +849,40 @@ const GradebookPage = () => {
                         data={gradeDistribution}
                         margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                       >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="grade" />
-                        <YAxis />
-                        <RechartsTooltip />
-                        <Legend />
+                        <CartesianGrid
+                          strokeDasharray="3 3"
+                          stroke={useColorModeValue("#e0e0e0", "#444444")}
+                        />
+                        <XAxis
+                          dataKey="grade"
+                          stroke={useColorModeValue("#666", "#ccc")}
+                        />
+                        <YAxis stroke={useColorModeValue("#666", "#ccc")} />
+                        <RechartsTooltip
+                          contentStyle={{
+                            backgroundColor: useColorModeValue(
+                              "#fff",
+                              "#2D3748"
+                            ),
+                            borderColor: useColorModeValue("#ccc", "#4A5568"),
+                            color: useColorModeValue("#333", "#fff"),
+                          }}
+                          itemStyle={{
+                            color: useColorModeValue("#3182CE", "#3182CE"),
+                          }}
+                          labelStyle={{
+                            color: useColorModeValue("#333", "#fff"),
+                          }}
+                        />
+                        <Legend
+                          wrapperStyle={{
+                            color: useColorModeValue("#333", "#fff"),
+                          }}
+                        />
                         <Bar
                           name="Courses"
                           dataKey="count"
-                          fill="#4299E1"
+                          fill={useColorModeValue("#4299E1", "#63B3ED")}
                           radius={[4, 4, 0, 0]}
                         />
                       </BarChart>

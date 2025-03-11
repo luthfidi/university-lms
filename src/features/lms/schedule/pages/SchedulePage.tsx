@@ -387,6 +387,7 @@ const SchedulePage = () => {
                   ".fc-toolbar-title": {
                     fontSize: "lg",
                     fontWeight: "bold",
+                    color: useColorModeValue("gray.800", "white"),
                   },
                   ".fc-event": {
                     cursor: "pointer",
@@ -398,16 +399,32 @@ const SchedulePage = () => {
                   ".fc-timegrid-event-harness": {
                     zIndex: 1, // Ensure events don't appear behind grid lines
                   },
+                  // Improved color contrast for all date texts
                   ".fc-col-header-cell-cushion, .fc-daygrid-day-number, .fc-list-day-text, .fc-list-day-side-text":
                     {
                       color: useColorModeValue("gray.800", "gray.100"),
                     },
-                  ".fc-day-header, .fc-day-number, .fc-list-day-text, .fc-list-day-side-text":
+                  // Specific styling for column headers
+                  ".fc-col-header-cell": {
+                    backgroundColor: useColorModeValue("gray.50", "gray.700"),
+                  },
+                  // All links within the calendar
+                  ".fc a": {
+                    color: useColorModeValue("gray.800", "white"),
+                  },
+                  // Time labels in time grid
+                  ".fc-timegrid-slot-label-cushion, .fc-timegrid-axis-cushion":
                     {
-                      color: useColorModeValue("gray.800", "gray.200"),
+                      color: useColorModeValue("gray.700", "gray.300"),
                     },
-                  ".fc-day-header a, .fc-day-number a": {
-                    color: "inherit",
+                  // Grid lines
+                  ".fc-theme-standard td, .fc-theme-standard th": {
+                    borderColor: useColorModeValue("gray.200", "gray.600"),
+                  },
+                  // Better hover state for clickable elements
+                  ".fc-daygrid-day-number:hover, .fc-daygrid-day-top:hover": {
+                    backgroundColor: useColorModeValue("gray.100", "gray.700"),
+                    borderRadius: "md",
                   },
                 }}
               >

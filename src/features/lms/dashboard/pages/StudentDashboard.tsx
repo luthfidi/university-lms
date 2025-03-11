@@ -301,7 +301,7 @@ const StudentDashboard = () => {
                         borderRadius="md"
                         borderWidth="1px"
                         borderColor={borderColor}
-                        _hover={{ bg: "gray.50" }}
+                        _hover={{ bg: useColorModeValue("gray.50", "gray.700") }}
                       >
                         <HStack spacing={4}>
                           <ListIcon
