@@ -22,6 +22,8 @@ import GradebookPage from "@/features/lms/gradebook/pages/GradebookPage";
 import SchedulePage from "@/features/lms/schedule/pages/SchedulePage";
 import AnnouncementPage from "@/features/lms/announcement/pages/AnnouncementPage";
 import KRSPage from "@/features/university/krs/pages/KRSPage";
+import AcademicHistoryPage from "@/features/university/academic/pages/AcademicHistoryPage";
+import ProfileDocumentsPage from "@/features/university/profile/pages/ProfileDocumentsPage";
 
 // Helper to handle role-based dashboard redirection
 const DashboardRouter = ({
@@ -167,6 +169,26 @@ const protectedRoutes: RouteObject[] = [
             path: "krs",
             element: <KRSPage />,
           },
+          {
+            path: "academic-history",
+            element: <AcademicHistoryPage />,
+          },
+          {
+            path: "profile",
+            children: [
+              {
+                index: true,
+                element: (
+                  <Navigate to="/university/profile/documents" replace />
+                ),
+              },
+              {
+                path: "documents",
+                element: <ProfileDocumentsPage />,
+              },
+              // Future profile-related pages can be added here
+            ],
+          },
           // Add more University routes here
         ],
       },
@@ -184,9 +206,9 @@ const publicRoutes: RouteObject[] = [
 
 // Redirect root to login
 const rootRoute: RouteObject = {
-    path: "/",
-    element: <Navigate to="/login" replace />
-  };
+  path: "/",
+  element: <Navigate to="/login" replace />,
+};
 
 // 404 route
 const notFoundRoute: RouteObject = {
@@ -196,7 +218,7 @@ const notFoundRoute: RouteObject = {
 
 const routes: RouteObject[] = [
   rootRoute,
-    ...publicRoutes,
+  ...publicRoutes,
   ...protectedRoutes,
   notFoundRoute,
 ];

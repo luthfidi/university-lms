@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 const NotFoundPage = () => {
   const navigate = useNavigate();
   const bgColor = useColorModeValue("white", "gray.800");
-
+  const borderColor = useColorModeValue("gray.200", "gray.700");
   return (
     <Box
       display="flex"
@@ -24,7 +24,7 @@ const NotFoundPage = () => {
     >
       <VStack
         spacing={6}
-        bg={bgColor}
+        bg={borderColor}
         p={8}
         borderRadius="lg"
         boxShadow="md"
@@ -47,7 +47,7 @@ const NotFoundPage = () => {
 
         <Button
           colorScheme="blue"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/university")}
           size="lg"
           width="full"
         >

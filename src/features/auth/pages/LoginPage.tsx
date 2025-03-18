@@ -135,7 +135,7 @@ const LoginPage = () => {
   return (
     <Box
       minH="100vh"
-      bg="gray.50"
+      bg={borderColor}
       py={10}
       display="flex"
       alignItems="center"
