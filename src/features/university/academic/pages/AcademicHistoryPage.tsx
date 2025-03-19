@@ -7,19 +7,15 @@ import {
   CardBody,
   CardHeader,
   Divider,
-  SimpleGrid, 
+  SimpleGrid,
   Flex,
   HStack,
   VStack,
   Badge,
   Button,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Icon,
   IconButton,
   useColorModeValue,
-  Avatar,
   Table,
   Thead,
   Tbody,
@@ -41,7 +37,6 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
-  Tooltip,
 } from "@chakra-ui/react";
 import { DownloadIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import {
@@ -69,28 +64,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import useAuthStore from "@/store/authStore";
-
-// Mock data for academic history
-interface Course {
-  id: string;
-  code: string;
-  name: string;
-  type: string;
-  credits: number;
-  grade: string;
-  score: number | null;
-  gradePoint: number | null;
-}
-
-interface Semester {
-  id: string;
-  period: string;
-  status: string;
-  credits: number;
-  gpa: number | null;
-  courses: Course[];
-}
+// import useAuthStore from "@/store/authStore";
 
 const academicData = {
   student: {
@@ -464,9 +438,9 @@ const academicData = {
     },
   ],
   gpaProgression: [
-    { semester: "2022/2023 - Odd", gpa: 3.65, cumulative: 3.65 },
-    { semester: "2022/2023 - Even", gpa: 3.72, cumulative: 3.68 },
-    { semester: "2023/2024 - Odd", gpa: 3.81, cumulative: 3.7 },
+    { semester: "1 - Odd", gpa: 3.65, cumulative: 3.65 },
+    { semester: "1 - Even", gpa: 3.72, cumulative: 3.68 },
+    { semester: "2 - Odd", gpa: 3.81, cumulative: 3.7 },
   ],
   creditDistribution: [
     { category: "Core Courses", completed: 40, required: 90 },
@@ -511,13 +485,21 @@ const formatNumber = (num: number | null) => {
 
 // Colors for the charts
 const COLORS = [
-  '#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', 
-  '#82ca9d', '#ffc658', '#8dd1e1', '#a4de6c', '#d0ed57'
+  "#0088FE",
+  "#00C49F",
+  "#FFBB28",
+  "#FF8042",
+  "#8884d8",
+  "#82ca9d",
+  "#ffc658",
+  "#8dd1e1",
+  "#a4de6c",
+  "#d0ed57",
 ];
 
 const AcademicHistoryPage = () => {
   const [selectedSemester, setSelectedSemester] = useState<string>("all");
-  const { user } = useAuthStore();
+  // const { user } = useAuthStore();
 
   // Color mode values
   const cardBg = useColorModeValue("white", "gray.800");
@@ -555,27 +537,15 @@ const AcademicHistoryPage = () => {
   // Calculate CGPA
   const cgpa = totalCredits > 0 ? weightedGradePoints / totalCredits : 0;
 
-  // Grade distribution data based on completed courses from all semesters
-  const gradesCount = academicData.semesters
-    .filter((s) => s.status === "Completed")
-    .flatMap((s) => s.courses)
-    .reduce(
-      (acc, course) => {
-        if (course.grade in acc) {
-          acc[course.grade] += 1;
-        }
-        return acc;
-      },
-      { A: 0, "A-": 0, "B+": 0, B: 0, "B-": 0, "C+": 0, C: 0, "C-": 0, D: 0, F: 0 } as Record<string, number>
-    );
-
   // Transform credit distribution data for the pie chart
-  const creditDistributionChartData = academicData.creditDistribution.map(item => ({
-    name: item.category,
-    value: item.completed,
-    required: item.required,
-    percentage: Math.round((item.completed / item.required) * 100)
-  }));
+  const creditDistributionChartData = academicData.creditDistribution.map(
+    (item) => ({
+      name: item.category,
+      value: item.completed,
+      required: item.required,
+      percentage: Math.round((item.completed / item.required) * 100),
+    })
+  );
 
   return (
     <Box>
@@ -603,24 +573,36 @@ const AcademicHistoryPage = () => {
             <Box>
               <VStack align="stretch" spacing={1}>
                 <HStack>
-                  <Text fontWeight="bold" color={headingColor}>Name:</Text>
+                  <Text fontWeight="bold" color={headingColor}>
+                    Name:
+                  </Text>
                   <Text color={textColor}>{academicData.student.name}</Text>
                 </HStack>
                 <HStack>
-                  <Text fontWeight="bold" color={headingColor}>Student ID:</Text>
+                  <Text fontWeight="bold" color={headingColor}>
+                    Student ID:
+                  </Text>
                   <Text color={textColor}>{academicData.student.id}</Text>
                 </HStack>
                 <HStack>
-                  <Text fontWeight="bold" color={headingColor}>Program:</Text>
+                  <Text fontWeight="bold" color={headingColor}>
+                    Program:
+                  </Text>
                   <Text color={textColor}>{academicData.student.program}</Text>
                 </HStack>
                 <HStack>
-                  <Text fontWeight="bold" color={headingColor}>Faculty:</Text>
+                  <Text fontWeight="bold" color={headingColor}>
+                    Faculty:
+                  </Text>
                   <Text color={textColor}>{academicData.student.faculty}</Text>
                 </HStack>
                 <HStack>
-                  <Text fontWeight="bold" color={headingColor}>Entry Year:</Text>
-                  <Text color={textColor}>{academicData.student.entryYear}</Text>
+                  <Text fontWeight="bold" color={headingColor}>
+                    Entry Year:
+                  </Text>
+                  <Text color={textColor}>
+                    {academicData.student.entryYear}
+                  </Text>
                 </HStack>
               </VStack>
             </Box>
@@ -635,7 +617,9 @@ const AcademicHistoryPage = () => {
                 </Stat>
                 <Stat>
                   <StatLabel color={textColor}>Total Credits</StatLabel>
-                  <StatNumber color={headingColor}>{academicData.student.completedCredits}</StatNumber>
+                  <StatNumber color={headingColor}>
+                    {academicData.student.completedCredits}
+                  </StatNumber>
                   <StatHelpText>
                     {Math.round(
                       (academicData.student.completedCredits /
@@ -736,7 +720,10 @@ const AcademicHistoryPage = () => {
                 <Tbody>
                   {filteredSemesters.map((semester) => (
                     <>
-                      <Tr key={semester.id} bg={useColorModeValue("gray.50", "gray.700")}>
+                      <Tr
+                        key={semester.id}
+                        bg={useColorModeValue("gray.50", "gray.700")}
+                      >
                         <Td colSpan={7} fontWeight="bold" color={headingColor}>
                           {semester.period}{" "}
                           <Badge
@@ -751,7 +738,9 @@ const AcademicHistoryPage = () => {
                       </Tr>
                       {semester.courses.map((course) => (
                         <Tr key={course.id}>
-                          <Td fontWeight="medium" color={headingColor}>{course.code}</Td>
+                          <Td fontWeight="medium" color={headingColor}>
+                            {course.code}
+                          </Td>
                           <Td color={textColor}>{course.name}</Td>
                           <Td>
                             <Badge
@@ -768,12 +757,19 @@ const AcademicHistoryPage = () => {
                               {course.grade}
                             </Badge>
                           </Td>
-                          <Td color={textColor}>{formatNumber(course.gradePoint)}</Td>
+                          <Td color={textColor}>
+                            {formatNumber(course.gradePoint)}
+                          </Td>
                           <Td color={textColor}>{semester.period}</Td>
                         </Tr>
                       ))}
                       <Tr>
-                        <Td colSpan={3} fontWeight="bold" textAlign="right" color={headingColor}>
+                        <Td
+                          colSpan={3}
+                          fontWeight="bold"
+                          textAlign="right"
+                          color={headingColor}
+                        >
                           Semester GPA:
                         </Td>
                         <Td colSpan={4} fontWeight="bold" color={headingColor}>
@@ -788,7 +784,14 @@ const AcademicHistoryPage = () => {
               </Table>
             </Box>
 
-            <Box mt={6} p={4} borderWidth="1px" borderColor={borderColor} borderRadius="lg" bg={cardBg}>
+            <Box
+              mt={6}
+              p={4}
+              borderWidth="1px"
+              borderColor={borderColor}
+              borderRadius="lg"
+              bg={cardBg}
+            >
               <Heading size="sm" mb={4} color={headingColor}>
                 Academic Summary
               </Heading>
@@ -810,7 +813,9 @@ const AcademicHistoryPage = () => {
                 </Stat>
                 <Stat>
                   <StatLabel color={textColor}>CGPA</StatLabel>
-                  <StatNumber color={headingColor}>{cgpa.toFixed(2)}</StatNumber>
+                  <StatNumber color={headingColor}>
+                    {cgpa.toFixed(2)}
+                  </StatNumber>
                 </Stat>
               </SimpleGrid>
             </Box>
@@ -868,7 +873,9 @@ const AcademicHistoryPage = () => {
                   >
                     {cgpa.toFixed(2)}
                   </Heading>
-                  <Text mt={2} color={textColor}>Scale 0.00 - 4.00</Text>
+                  <Text mt={2} color={textColor}>
+                    Scale 0.00 - 4.00
+                  </Text>
                 </CardBody>
               </Card>
 
@@ -892,16 +899,18 @@ const AcademicHistoryPage = () => {
                     Academic Standing
                   </Text>
                   <Heading size="xl" mt={2} color={headingColor}>
-                    <Badge 
-                      colorScheme="green" 
-                      p={2} 
+                    <Badge
+                      colorScheme="green"
+                      p={2}
                       borderRadius="md"
                       fontSize="xl"
                     >
                       Excellent
                     </Badge>
                   </Heading>
-                  <Text mt={2} color={textColor}>Dean's List Eligible</Text>
+                  <Text mt={2} color={textColor}>
+                    Dean's List Eligible
+                  </Text>
                 </CardBody>
               </Card>
             </SimpleGrid>
@@ -917,22 +926,31 @@ const AcademicHistoryPage = () => {
                 <CardBody>
                   <Box height="300px">
                     <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={academicData.gpaProgression} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke={chartGridColor} />
-                        <XAxis 
-                          dataKey="semester" 
-                          tick={{ fill: chartTextColor }} 
-                          tickMargin={10}
-                          angle={-20}
-                          textAnchor="end"
+                      <LineChart
+                        data={academicData.gpaProgression}
+                        margin={{ top: 10, right: 30, left: 0, bottom: 20 }}
+                      >
+                        <CartesianGrid
+                          strokeDasharray="3 3"
+                          stroke={chartGridColor}
                         />
-                        <YAxis 
-                          domain={[0, 4]} 
-                          tick={{ fill: chartTextColor }} 
+                        <XAxis
+                          dataKey="semester"
+                          tick={{ fill: chartTextColor }}
+                          tickMargin={12}
+                          textAnchor="middle"
+                          fontSize={14}
+                        />
+                        <YAxis
+                          domain={[0, 4]}
+                          tick={{ fill: chartTextColor }}
                           tickMargin={10}
                         />
-                        <RechartsTooltip 
-                          formatter={(value: number) => [value.toFixed(2), "GPA"]}
+                        <RechartsTooltip
+                          formatter={(value: number) => [
+                            value.toFixed(2),
+                            "GPA",
+                          ]}
                           labelFormatter={(label) => `Semester: ${label}`}
                           contentStyle={{
                             backgroundColor: useColorModeValue(
@@ -954,19 +972,19 @@ const AcademicHistoryPage = () => {
                             color: useColorModeValue("#333", "#fff"),
                           }}
                         />
-                        <Line 
-                          type="monotone" 
-                          dataKey="gpa" 
-                          stroke="#4299E1" 
+                        <Line
+                          type="monotone"
+                          dataKey="gpa"
+                          stroke="#4299E1"
                           name="Semester GPA"
                           strokeWidth={2}
                           dot={{ r: 5 }}
                           activeDot={{ r: 8 }}
                         />
-                        <Line 
-                          type="monotone" 
-                          dataKey="cumulative" 
-                          stroke="#48BB78" 
+                        <Line
+                          type="monotone"
+                          dataKey="cumulative"
+                          stroke="#48BB78"
                           name="Cumulative GPA"
                           strokeWidth={2}
                           dot={{ r: 5 }}
@@ -988,17 +1006,29 @@ const AcademicHistoryPage = () => {
                 <CardBody>
                   <Box height="300px">
                     <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={gradeDistributionData} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke={chartGridColor} />
-                        <XAxis 
-                          dataKey="grade" 
+                      <BarChart
+                        data={gradeDistributionData}
+                        margin={{ top: 10, right: 30, left: 0, bottom: 20 }}
+                      >
+                        <CartesianGrid
+                          strokeDasharray="3 3"
+                          stroke={chartGridColor}
+                        />
+                        <XAxis
+                          dataKey="grade"
                           tick={{ fill: chartTextColor }}
                         />
-                        <YAxis 
+                        <YAxis
                           tick={{ fill: chartTextColor }}
                           tickMargin={10}
                         />
                         <RechartsTooltip
+                          cursor={{
+                            fill: useColorModeValue(
+                              "rgba(0,0,0,0.1)",
+                              "rgba(255,255,255,0.1)"
+                            ),
+                          }}
                           formatter={(value: number) => [value, "Courses"]}
                           labelFormatter={(label) => `Grade: ${label}`}
                           contentStyle={{
@@ -1016,23 +1046,25 @@ const AcademicHistoryPage = () => {
                             color: useColorModeValue("#333", "#fff"),
                           }}
                         />
-                        <Bar 
-                          dataKey="count" 
-                          name="Number of Courses"
-                        >
+                        <Bar dataKey="count" name="Number of Courses">
                           {gradeDistributionData.map((entry, index) => (
-                            <Cell 
-                              key={`cell-${index}`} 
+                            <Cell
+                              key={`cell-${index}`}
                               fill={
-                                entry.grade === 'A' || entry.grade === 'A-' 
-                                  ? '#48BB78' // green
-                                  : entry.grade === 'B+' || entry.grade === 'B' || entry.grade === 'B-'
-                                    ? '#4299E1' // blue
-                                    : entry.grade === 'C+' || entry.grade === 'C' || entry.grade === 'C-'
-                                      ? '#ECC94B' // yellow
-                                      : entry.grade === 'D' || entry.grade === 'D-'
-                                        ? '#ED8936' // orange
-                                        : '#F56565' // red for F
+                                entry.grade === "A" || entry.grade === "A-"
+                                  ? "#48BB78" // green
+                                  : entry.grade === "B+" ||
+                                      entry.grade === "B" ||
+                                      entry.grade === "B-"
+                                    ? "#4299E1" // blue
+                                    : entry.grade === "C+" ||
+                                        entry.grade === "C" ||
+                                        entry.grade === "C-"
+                                      ? "#ECC94B" // yellow
+                                      : entry.grade === "D" ||
+                                          entry.grade === "D-"
+                                        ? "#ED8936" // orange
+                                        : "#F56565" // red for F
                               }
                             />
                           ))}
@@ -1057,8 +1089,12 @@ const AcademicHistoryPage = () => {
                     {academicData.courseCategories.map((category) => (
                       <Box key={category.name}>
                         <Flex justify="space-between" mb={1}>
-                          <Text fontWeight="medium" color={headingColor}>{category.name}</Text>
-                          <Text color={textColor}>{category.percentage.toFixed(1)}%</Text>
+                          <Text fontWeight="medium" color={headingColor}>
+                            {category.name}
+                          </Text>
+                          <Text color={textColor}>
+                            {category.percentage.toFixed(1)}%
+                          </Text>
                         </Flex>
                         <Progress
                           value={category.percentage}
@@ -1101,20 +1137,29 @@ const AcademicHistoryPage = () => {
                           paddingAngle={5}
                           dataKey="value"
                           nameKey="name"
-                          label={({ name, percentage }) => `${name}: ${percentage}%`}
+                          label={({ name, percentage }) =>
+                            `${name}: ${percentage}%`
+                          }
                           labelLine={true}
                         >
-                          {creditDistributionChartData.map((entry, index) => (
-                            <Cell 
-                              key={`cell-${index}`} 
-                              fill={COLORS[index % COLORS.length]} 
+                          {creditDistributionChartData.map((_, index) => (
+                            <Cell
+                              key={`cell-${index}`}
+                              fill={COLORS[index % COLORS.length]}
                             />
                           ))}
                         </Pie>
-                        <RechartsTooltip 
-                          formatter={(value: number, name: string, props: any) => {
+                        <RechartsTooltip
+                          formatter={(
+                            value: number,
+                            name: string,
+                            props: any
+                          ) => {
                             const item = props.payload;
-                            return [`${value}/${item.required} credits (${item.percentage}%)`, name];
+                            return [
+                              `${value}/${item.required} credits (${item.percentage}%)`,
+                              name,
+                            ];
                           }}
                           contentStyle={{
                             backgroundColor: useColorModeValue(
@@ -1140,7 +1185,12 @@ const AcademicHistoryPage = () => {
             </SimpleGrid>
 
             {/* Academic Summary */}
-            <Card variant="outline" borderColor={borderColor} bg={cardBg} mt={6}>
+            <Card
+              variant="outline"
+              borderColor={borderColor}
+              bg={cardBg}
+              mt={6}
+            >
               <CardHeader pb={0} pt={5} px={5}>
                 <Heading size="md" color={headingColor}>
                   Academic Summary
@@ -1149,19 +1199,25 @@ const AcademicHistoryPage = () => {
               <CardBody>
                 <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
                   <Box>
-                    <Text fontWeight="bold" mb={3} color={headingColor}>Time-Based Performance</Text>
+                    <Text fontWeight="bold" mb={3} color={headingColor}>
+                      Time-Based Performance
+                    </Text>
                     <VStack align="stretch" spacing={2}>
                       <Flex justify="space-between">
                         <Text color={textColor}>Current Semester:</Text>
                         <HStack>
-                          <Text fontWeight="medium" color={headingColor}>In Progress</Text>
+                          <Text fontWeight="medium" color={headingColor}>
+                            In Progress
+                          </Text>
                           <Badge colorScheme="blue">21 Credits</Badge>
                         </HStack>
                       </Flex>
                       <Flex justify="space-between">
                         <Text color={textColor}>Best Semester GPA:</Text>
                         <HStack>
-                          <Text fontWeight="medium" color={headingColor}>3.81</Text>
+                          <Text fontWeight="medium" color={headingColor}>
+                            3.81
+                          </Text>
                           <Badge colorScheme="green">2023/2024 - Odd</Badge>
                         </HStack>
                       </Flex>
@@ -1177,18 +1233,27 @@ const AcademicHistoryPage = () => {
                   </Box>
 
                   <Box>
-                    <Text fontWeight="bold" mb={3} color={headingColor}>Graduation Projection</Text>
+                    <Text fontWeight="bold" mb={3} color={headingColor}>
+                      Graduation Projection
+                    </Text>
                     <VStack align="stretch" spacing={2}>
                       <Flex justify="space-between">
                         <Text color={textColor}>Current Progress:</Text>
                         <Text fontWeight="medium" color={headingColor}>
-                          {Math.round((academicData.student.completedCredits / academicData.student.totalCredits) * 100)}%
+                          {Math.round(
+                            (academicData.student.completedCredits /
+                              academicData.student.totalCredits) *
+                              100
+                          )}
+                          %
                         </Text>
                       </Flex>
                       <Flex justify="space-between">
                         <Text color={textColor}>Credits Remaining:</Text>
                         <Text fontWeight="medium" color={headingColor}>
-                          {academicData.student.totalCredits - academicData.student.completedCredits} credits
+                          {academicData.student.totalCredits -
+                            academicData.student.completedCredits}{" "}
+                          credits
                         </Text>
                       </Flex>
                       <Flex justify="space-between">
@@ -1199,9 +1264,7 @@ const AcademicHistoryPage = () => {
                       </Flex>
                       <Flex justify="space-between">
                         <Text color={textColor}>Honors Track:</Text>
-                        <Badge colorScheme="purple">
-                          Cum Laude Eligible
-                        </Badge>
+                        <Badge colorScheme="purple">Cum Laude Eligible</Badge>
                       </Flex>
                     </VStack>
                   </Box>
@@ -1219,11 +1282,17 @@ const AcademicHistoryPage = () => {
                   <Heading size="md" mb={4} color={headingColor}>
                     Degree Progress
                   </Heading>
-                  <Box bg={useColorModeValue("gray.50", "gray.700")} p={6} borderRadius="md">
+                  <Box
+                    bg={useColorModeValue("gray.50", "gray.700")}
+                    p={6}
+                    borderRadius="md"
+                  >
                     <VStack spacing={6} align="stretch">
                       <Box>
                         <Flex justify="space-between" mb={2}>
-                          <Text fontWeight="bold" color={headingColor}>Total Progress</Text>
+                          <Text fontWeight="bold" color={headingColor}>
+                            Total Progress
+                          </Text>
                           <Text fontWeight="bold" color={headingColor}>
                             {Math.round(
                               (academicData.student.completedCredits /
@@ -1248,7 +1317,9 @@ const AcademicHistoryPage = () => {
                       <Box>
                         <HStack mb={2}>
                           <Icon as={MdSchool} color="blue.500" />
-                          <Text fontWeight="bold" color={headingColor}>Graduation Expectation</Text>
+                          <Text fontWeight="bold" color={headingColor}>
+                            Graduation Expectation
+                          </Text>
                         </HStack>
                         <VStack align="stretch" pl={6} spacing={2}>
                           <Flex justify="space-between">
@@ -1259,7 +1330,9 @@ const AcademicHistoryPage = () => {
                           </Flex>
                           <Flex justify="space-between">
                             <Text color={textColor}>Remaining Semesters</Text>
-                            <Text fontWeight="medium" color={headingColor}>4</Text>
+                            <Text fontWeight="medium" color={headingColor}>
+                              4
+                            </Text>
                           </Flex>
                         </VStack>
                       </Box>
@@ -1269,7 +1342,9 @@ const AcademicHistoryPage = () => {
                       <Box>
                         <HStack mb={2}>
                           <Icon as={MdTimeline} color="purple.500" />
-                          <Text fontWeight="bold" color={headingColor}>Academic Journey Status</Text>
+                          <Text fontWeight="bold" color={headingColor}>
+                            Academic Journey Status
+                          </Text>
                         </HStack>
                         <VStack align="start" pl={6} spacing={3}>
                           <HStack>
@@ -1292,7 +1367,9 @@ const AcademicHistoryPage = () => {
                               p={1}
                               boxSize={6}
                             />
-                            <Text color={textColor}>Core Foundation Courses Passed</Text>
+                            <Text color={textColor}>
+                              Core Foundation Courses Passed
+                            </Text>
                           </HStack>
                           <HStack>
                             <Icon
@@ -1303,7 +1380,9 @@ const AcademicHistoryPage = () => {
                               p={1}
                               boxSize={6}
                             />
-                            <Text color={textColor}>Completing Intermediate Level Courses</Text>
+                            <Text color={textColor}>
+                              Completing Intermediate Level Courses
+                            </Text>
                           </HStack>
                           <HStack opacity={0.5}>
                             <Icon
@@ -1341,10 +1420,16 @@ const AcademicHistoryPage = () => {
                     Upcoming Study Plan
                   </Heading>
                   <VStack spacing={4} align="stretch">
-                    <HStack bg={useColorModeValue("blue.50", "blue.900")} p={3} borderRadius="md">
+                    <HStack
+                      bg={useColorModeValue("blue.50", "blue.900")}
+                      p={3}
+                      borderRadius="md"
+                    >
                       <Icon as={MdHistory} color="blue.500" boxSize={6} />
                       <Box>
-                        <Text fontWeight="bold" color={headingColor}>Next Semester</Text>
+                        <Text fontWeight="bold" color={headingColor}>
+                          Next Semester
+                        </Text>
                         <Text color={textColor}>2024/2025 - Odd</Text>
                       </Box>
                     </HStack>
@@ -1454,7 +1539,12 @@ const AcademicHistoryPage = () => {
               </Card>
 
               {/* Academic Achievements */}
-              <Card variant="outline" gridColumn={{ lg: "span 2" }} borderColor={borderColor} bg={cardBg}>
+              <Card
+                variant="outline"
+                gridColumn={{ lg: "span 2" }}
+                borderColor={borderColor}
+                bg={cardBg}
+              >
                 <CardBody>
                   <Heading size="md" mb={4} color={headingColor}>
                     Academic Achievements
@@ -1467,7 +1557,11 @@ const AcademicHistoryPage = () => {
                       borderLeftWidth="4px"
                       borderLeftColor="green.500"
                     >
-                      <Heading size="sm" mb={2} color={useColorModeValue("green.700", "green.200")}>
+                      <Heading
+                        size="sm"
+                        mb={2}
+                        color={useColorModeValue("green.700", "green.200")}
+                      >
                         Dean's List
                       </Heading>
                       <Text fontSize="sm" color={textColor}>
@@ -1483,7 +1577,11 @@ const AcademicHistoryPage = () => {
                       borderLeftWidth="4px"
                       borderLeftColor="blue.500"
                     >
-                      <Heading size="sm" mb={2} color={useColorModeValue("blue.700", "blue.200")}>
+                      <Heading
+                        size="sm"
+                        mb={2}
+                        color={useColorModeValue("blue.700", "blue.200")}
+                      >
                         Consistent Performance
                       </Heading>
                       <Text fontSize="sm" color={textColor}>
@@ -1498,7 +1596,11 @@ const AcademicHistoryPage = () => {
                       borderLeftWidth="4px"
                       borderLeftColor="purple.500"
                     >
-                      <Heading size="sm" mb={2} color={useColorModeValue("purple.700", "purple.200")}>
+                      <Heading
+                        size="sm"
+                        mb={2}
+                        color={useColorModeValue("purple.700", "purple.200")}
+                      >
                         Fast Learner
                       </Heading>
                       <Text fontSize="sm" color={textColor}>

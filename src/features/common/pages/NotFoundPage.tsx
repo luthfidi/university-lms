@@ -19,7 +19,7 @@ const NotFoundPage = () => {
       alignItems="center"
       justifyContent="center"
       minH="100vh"
-      bg="gray.50"
+      bg={bgColor}
       p={4}
     >
       <VStack

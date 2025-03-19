@@ -678,7 +678,7 @@ const CourseDetailPage = () => {
                     justify="space-between"
                     align="center"
                     p={3}
-                    bg="gray.50"
+                    bg={borderColor}
                     borderWidth="1px"
                     borderRadius="md"
                     borderColor={borderColor}

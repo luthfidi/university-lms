@@ -4,22 +4,18 @@ import {
   Button,
   FormControl,
   FormLabel,
-  Input,
   VStack,
   Heading,
   Text,
   useToast,
-  InputGroup,
-  InputRightElement,
-  IconButton,
-  FormErrorMessage,
   Select,
   Center,
   Image,
   useColorModeValue,
   Container,
+  FormErrorMessage,
+  Spinner,
 } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -33,8 +29,6 @@ const UNIVERSITY_LOGO =
 
 // Login form validation schema
 const loginSchema = z.object({
-  username: z.string().min(1, "Username is required"),
-  password: z.string().min(1, "Password is required"),
   role: z.enum(["student", "lecturer", "admin"], {
     errorMap: () => ({ message: "Please select a role" }),
   }),
@@ -43,7 +37,7 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 const LoginPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const { login } = useAuthStore();
   const navigate = useNavigate();
   const toast = useToast();
@@ -54,24 +48,26 @@ const LoginPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
-      password: "",
       role: "student",
     },
   });
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      // In a real app, this would be an API call
-      // For now, we'll simulate a successful login with mock data
+      setIsLoggingIn(true);
+      
+      // Default credentials for all users
+      const username = "test";
+      
+      // Mock user data based on role
       const mockUserData: Record<UserRole, User> = {
         student: {
           id: "std-001",
-          username: data.username,
+          username: username,
           email: "student@university.com",
           role: "student",
           firstName: "John",
@@ -80,7 +76,7 @@ const LoginPage = () => {
         },
         lecturer: {
           id: "lec-001",
-          username: data.username,
+          username: username,
           email: "lecturer@university.com",
           role: "lecturer",
           firstName: "Jane",
@@ -89,7 +85,7 @@ const LoginPage = () => {
         },
         admin: {
           id: "adm-001",
-          username: data.username,
+          username: username,
           email: "admin@university.com",
           role: "admin",
           firstName: "Admin",
@@ -124,11 +120,12 @@ const LoginPage = () => {
     } catch (error) {
       toast({
         title: "Login failed",
-        description: "Invalid username or password",
+        description: "Authentication failed",
         status: "error",
         duration: 5000,
         isClosable: true,
       });
+      setIsLoggingIn(false);
     }
   };
 
@@ -162,52 +159,13 @@ const LoginPage = () => {
                 Welcome Back
               </Heading>
               <Text color="gray.500" fontSize="sm" textAlign="center">
-                Sign in to your account
+                Select your role to continue
               </Text>
             </VStack>
 
             {/* Login Form */}
             <form onSubmit={handleSubmit(onSubmit)}>
               <VStack spacing={4}>
-                <FormControl isInvalid={!!errors.username}>
-                  <FormLabel htmlFor="username">Username</FormLabel>
-                  <Input
-                    id="username"
-                    type="text"
-                    placeholder="Enter your username"
-                    {...register("username")}
-                  />
-                  <FormErrorMessage>
-                    {errors.username?.message}
-                  </FormErrorMessage>
-                </FormControl>
-
-                <FormControl isInvalid={!!errors.password}>
-                  <FormLabel htmlFor="password">Password</FormLabel>
-                  <InputGroup>
-                    <Input
-                      id="password"
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Enter your password"
-                      {...register("password")}
-                    />
-                    <InputRightElement>
-                      <IconButton
-                        aria-label={
-                          showPassword ? "Hide password" : "Show password"
-                        }
-                        icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
-                        onClick={() => setShowPassword(!showPassword)}
-                        variant="ghost"
-                        size="sm"
-                      />
-                    </InputRightElement>
-                  </InputGroup>
-                  <FormErrorMessage>
-                    {errors.password?.message}
-                  </FormErrorMessage>
-                </FormControl>
-
                 <FormControl isInvalid={!!errors.role}>
                   <FormLabel htmlFor="role">Login As</FormLabel>
                   <Select
@@ -227,11 +185,19 @@ const LoginPage = () => {
                   colorScheme="blue"
                   size="lg"
                   width="full"
-                  isLoading={isSubmitting}
-                  loadingText="Signing in..."
-                  mt={4}
+                  disabled={isLoggingIn}
+                  position="relative"
+                  mt={2}
+                  _hover={{ bg: "blue.600" }}
                 >
-                  Sign In
+                  {isLoggingIn ? (
+                    <Box display="flex" alignItems="center" justifyContent="center">
+                      <Spinner size="sm" color="white" mr={2} />
+                      <Text>Signing in...</Text>
+                    </Box>
+                  ) : (
+                    "Sign In"
+                  )}
                 </Button>
               </VStack>
             </form>
@@ -248,4 +214,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginPage; 

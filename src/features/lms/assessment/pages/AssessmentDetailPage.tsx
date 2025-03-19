@@ -813,7 +813,12 @@ const AssessmentDetailPage = () => {
                   <Divider />
 
                   <Box>
-                    <Text fontWeight="bold" fontSize="lg" mb={4}>
+                    <Text
+                      fontWeight="bold"
+                      fontSize="lg"
+                      mb={4}
+                      color={useColorModeValue("gray.800", "white")}
+                    >
                       {currentQuestion.questionNumber}. {currentQuestion.text}
                     </Text>
 
@@ -830,20 +835,37 @@ const AssessmentDetailPage = () => {
                             borderWidth="1px"
                             borderRadius="md"
                             p={3}
-                            _hover={{ bg: "gray.50" }}
+                            cursor="pointer"
+                            onClick={() =>
+                              handleAnswerSelect(currentQuestion.id, option.id)
+                            }
+                            _hover={{
+                              bg: useColorModeValue("gray.50", "gray.700"),
+                            }}
                             bg={
                               selectedAnswers[currentQuestion.id] === option.id
-                                ? "blue.50"
+                                ? useColorModeValue("blue.50", "blue.900")
                                 : undefined
                             }
                             borderColor={
                               selectedAnswers[currentQuestion.id] === option.id
-                                ? "blue.300"
-                                : "gray.200"
+                                ? useColorModeValue("blue.300", "blue.500")
+                                : useColorModeValue("gray.200", "gray.600")
                             }
                           >
-                            <Radio value={option.id} width="100%">
-                              <Text>{option.text}</Text>
+                            <Radio
+                              value={option.id}
+                              width="100%"
+                              pointerEvents="none"
+                            >
+                              <Text
+                                color={useColorModeValue(
+                                  "gray.800",
+                                  "gray.100"
+                                )}
+                              >
+                                {option.text}
+                              </Text>
                             </Radio>
                           </Box>
                         ))}

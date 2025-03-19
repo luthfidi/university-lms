@@ -31,7 +31,6 @@ import {
   Th,
   Td,
   IconButton,
-  Divider,
   useToast,
   useColorModeValue,
   Modal,
@@ -42,7 +41,6 @@ import {
   ModalFooter,
   ModalCloseButton,
   useDisclosure,
-  Switch,
   Tooltip,
   Progress,
   Icon,
@@ -70,7 +68,7 @@ import {
   MdOutlineContactEmergency,
 } from "react-icons/md";
 
-import useAuthStore from "@/store/authStore";
+// import useAuthStore from "@/store/authStore";
 
 // Mock data for student profile
 const profileData = {
@@ -250,7 +248,7 @@ const formatDate = (dateString: string | null) => {
 };
 
 const ProfileDocumentsPage = () => {
-  const { user } = useAuthStore();
+  // const { user } = useAuthStore();
   const toast = useToast();
 
   // State for profile editing

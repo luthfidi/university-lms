@@ -727,6 +727,12 @@ const GradebookPage = () => {
                         <XAxis dataKey="name" />
                         <YAxis domain={[0, 100]} />
                         <RechartsTooltip
+                          cursor={{
+                            fill: useColorModeValue(
+                              "rgba(0,0,0,0.1)",
+                              "rgba(255,255,255,0.1)"
+                            ),
+                          }}
                           contentStyle={{
                             backgroundColor: useColorModeValue(
                               "#fff",
@@ -859,6 +865,12 @@ const GradebookPage = () => {
                         />
                         <YAxis stroke={useColorModeValue("#666", "#ccc")} />
                         <RechartsTooltip
+                          cursor={{
+                            fill: useColorModeValue(
+                              "rgba(0,0,0,0.1)",
+                              "rgba(255,255,255,0.1)"
+                            ),
+                          }}
                           contentStyle={{
                             backgroundColor: useColorModeValue(
                               "#fff",

@@ -31,11 +31,7 @@ import {
   TagLeftIcon,
   Tooltip,
 } from "@chakra-ui/react";
-import {
-  ChevronRightIcon,
-  CheckIcon,
-  CloseIcon,
-} from "@chakra-ui/icons";
+import { ChevronRightIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   MdAssignment,
@@ -390,18 +386,30 @@ const AssessmentResultPage = () => {
       {isQuiz && (
         <Card variant="outline" mb={6}>
           <CardBody>
-            <Heading size="md" mb={4}>
+            <Heading
+              size="md"
+              mb={4}
+              color={useColorModeValue("gray.800", "white")}
+            >
               Quiz Questions
             </Heading>
             <Accordion allowMultiple>
-              {quizResultData.questions.map((question, ) => (
-                <AccordionItem key={question.id}>
+              {quizResultData.questions.map((question) => (
+                <AccordionItem
+                  key={question.id}
+                  borderColor={useColorModeValue("gray.200", "gray.600")}
+                >
                   <h2>
-                    <AccordionButton>
+                    <AccordionButton
+                      _hover={{ bg: useColorModeValue("gray.50", "gray.700") }}
+                    >
                       <Box flex="1" textAlign="left">
                         <HStack>
                           <Box>
-                            <Text fontWeight="bold">
+                            <Text
+                              fontWeight="bold"
+                              color={useColorModeValue("gray.800", "white")}
+                            >
                               Question {question.questionNumber}
                             </Text>
                           </Box>
@@ -410,37 +418,52 @@ const AssessmentResultPage = () => {
                           >
                             {question.isCorrect ? "Correct" : "Incorrect"}
                           </Badge>
-                          <Text>
+                          <Text
+                            color={useColorModeValue("gray.700", "gray.300")}
+                          >
                             {question.earnedPoints}/{question.points} points
                           </Text>
                         </HStack>
                       </Box>
-                      <AccordionIcon />
+                      <AccordionIcon
+                        color={useColorModeValue("gray.600", "gray.400")}
+                      />
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4}>
                     <VStack align="stretch" spacing={4}>
-                      <Text fontWeight="medium" whiteSpace="pre-wrap">
+                      <Text
+                        fontWeight="medium"
+                        whiteSpace="pre-wrap"
+                        color={useColorModeValue("gray.800", "gray.100")}
+                      >
                         {question.text}
                       </Text>
 
-                      <Divider />
+                      <Divider
+                        borderColor={useColorModeValue("gray.200", "gray.600")}
+                      />
 
                       <Box>
-                        <Text fontWeight="bold" mb={2}>
+                        <Text
+                          fontWeight="bold"
+                          mb={2}
+                          color={useColorModeValue("gray.800", "white")}
+                        >
                           Your Answer:
                         </Text>
                         {question.options.map((option) => (
                           <HStack
                             key={option.id}
                             p={2}
+                            m={1}
                             bg={
                               question.selectedAnswer === option.id
                                 ? question.isCorrect
-                                  ? "green.50"
-                                  : "red.50"
+                                  ? useColorModeValue("green.50", "green.900")
+                                  : useColorModeValue("red.50", "red.900")
                                 : option.id === question.correctAnswer
-                                  ? "green.50"
+                                  ? useColorModeValue("green.50", "green.900")
                                   : undefined
                             }
                             borderRadius="md"
@@ -452,10 +475,10 @@ const AssessmentResultPage = () => {
                             }
                             borderColor={
                               option.id === question.correctAnswer
-                                ? "green.200"
+                                ? useColorModeValue("green.200", "green.600")
                                 : option.id === question.selectedAnswer &&
                                     !question.isCorrect
-                                  ? "red.200"
+                                  ? useColorModeValue("red.200", "red.600")
                                   : undefined
                             }
                           >
@@ -463,25 +486,54 @@ const AssessmentResultPage = () => {
                               <Icon
                                 as={question.isCorrect ? CheckIcon : CloseIcon}
                                 color={
-                                  question.isCorrect ? "green.500" : "red.500"
+                                  question.isCorrect
+                                    ? useColorModeValue(
+                                        "green.500",
+                                        "green.300"
+                                      )
+                                    : useColorModeValue("red.500", "red.300")
                                 }
                               />
                             )}
                             {option.id === question.correctAnswer &&
                               option.id !== question.selectedAnswer && (
-                                <Icon as={CheckIcon} color="green.500" />
+                                <Icon
+                                  as={CheckIcon}
+                                  color={useColorModeValue(
+                                    "green.500",
+                                    "green.300"
+                                  )}
+                                />
                               )}
-                            <Text>{option.text}</Text>
+                            <Text
+                              color={useColorModeValue("gray.800", "gray.100")}
+                            >
+                              {option.text}
+                            </Text>
                           </HStack>
                         ))}
                       </Box>
 
                       {question.explanation && (
-                        <Box bg="blue.50" p={3} borderRadius="md">
-                          <Text fontWeight="bold" mb={1}>
+                        <Box
+                          bg={useColorModeValue("blue.50", "blue.900")}
+                          p={3}
+                          borderRadius="md"
+                          borderLeftWidth="4px"
+                          borderLeftColor="blue.500"
+                        >
+                          <Text
+                            fontWeight="bold"
+                            mb={1}
+                            color={useColorModeValue("gray.800", "white")}
+                          >
                             Explanation:
                           </Text>
-                          <Text>{question.explanation}</Text>
+                          <Text
+                            color={useColorModeValue("gray.800", "gray.100")}
+                          >
+                            {question.explanation}
+                          </Text>
                         </Box>
                       )}
                     </VStack>
@@ -500,13 +552,26 @@ const AssessmentResultPage = () => {
             Instructor Feedback
           </Text>
           {isQuiz ? (
-            <Box p={4} bg="blue.50" borderRadius="md">
-              <Text>{quizResultData.feedback}</Text>
+            <Box
+              p={4}
+              bg={useColorModeValue("brand.primary.50", "brand.primary.900")}
+              borderRadius="md"
+            >
+              <Text color={useColorModeValue("gray.800", "gray.100")}>
+                {quizResultData.feedback}
+              </Text>
             </Box>
           ) : (
             <>
-              <Box p={4} bg="blue.50" borderRadius="md" mb={6}>
-                <Text>{assignmentResultData.feedback.overall}</Text>
+              <Box
+                p={4}
+                bg={useColorModeValue("brand.primary.50", "brand.primary.900")}
+                borderRadius="md"
+                mb={6}
+              >
+                <Text color={useColorModeValue("gray.800", "gray.100")}>
+                  {assignmentResultData.feedback.overall}
+                </Text>
               </Box>
 
               <Text fontWeight="bold" mb={4}>
@@ -551,7 +616,6 @@ const AssessmentResultPage = () => {
           )}
         </CardBody>
       </Card>
-
       {/* Class Statistics */}
       <Card variant="outline" mb={6}>
         <CardBody>
@@ -642,7 +706,7 @@ const AssessmentResultPage = () => {
       <Flex
         align="center"
         mb={6}
-        bg="brand.primary.50"
+        bg={useColorModeValue("brand.primary.50", "brand.primary.900")}
         p={4}
         borderRadius="md"
         borderLeftWidth="4px"
@@ -651,14 +715,28 @@ const AssessmentResultPage = () => {
         <Icon
           as={getAssessmentIcon(result.type)}
           boxSize={6}
-          color="brand.primary.600"
+          color={useColorModeValue("brand.primary.600", "brand.primary.200")}
           mr={3}
         />
         <Box flex="1">
           <HStack mb={1}>
             <Badge colorScheme="blue">{result.courseCode}</Badge>
-            <Text color="brand.primary.600">•</Text>
-            <Text color="brand.primary.600">{result.courseName}</Text>
+            <Text
+              color={useColorModeValue(
+                "brand.primary.600",
+                "brand.primary.200"
+              )}
+            >
+              •
+            </Text>
+            <Text
+              color={useColorModeValue(
+                "brand.primary.600",
+                "brand.primary.200"
+              )}
+            >
+              {result.courseName}
+            </Text>
             <Badge
               colorScheme={
                 result.type === "assignment"
@@ -671,7 +749,11 @@ const AssessmentResultPage = () => {
               {result.type.charAt(0).toUpperCase() + result.type.slice(1)}
             </Badge>
           </HStack>
-          <Heading size="lg" mb={1}>
+          <Heading
+            size="lg"
+            mb={1}
+            color={useColorModeValue("gray.800", "white")}
+          >
             {result.title} - Results
           </Heading>
         </Box>
