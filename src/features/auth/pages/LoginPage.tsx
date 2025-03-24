@@ -175,7 +175,7 @@ const LoginPage = () => {
                   >
                     <option value="student">Student</option>
                     <option value="lecturer">Lecturer</option>
-                    <option value="admin">Administrator</option>
+                    <option value="admin">Admin</option>
                   </Select>
                   <FormErrorMessage>{errors.role?.message}</FormErrorMessage>
                 </FormControl>
