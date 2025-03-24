@@ -18,8 +18,6 @@ import {
 const CoursesPage = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [semesterFilter, setSemesterFilter] = useState("odd-2024");
-  const [typeFilter, setTypeFilter] = useState("");
 
   // Filter courses based on search term and filters
   const filteredCourses = courses.filter((course) => {
@@ -29,29 +27,16 @@ const CoursesPage = () => {
       course.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
       course.lecturer.toLowerCase().includes(searchTerm.toLowerCase());
 
-    // Type filter
-    const matchesType =
-      typeFilter === "" ||
-      course.type.toLowerCase() === typeFilter.toUpperCase();
 
     // For the purposes of this example, we're filtering against the hardcoded semester value
     const matchesSemester = course.semester.toLowerCase().includes("odd 2024");
 
-    return matchesSearch && matchesType && matchesSemester;
+    return matchesSearch && matchesSemester;
   });
 
   // Handle search
   const handleSearch = (term: string) => {
     setSearchTerm(term);
-  };
-
-  // Handle filter change
-  const handleFilterChange = (filterName: string, value: string) => {
-    if (filterName === "semester") {
-      setSemesterFilter(value);
-    } else if (filterName === "type") {
-      setTypeFilter(value);
-    }
   };
 
   // Navigate to course detail
