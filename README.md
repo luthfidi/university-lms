@@ -135,10 +135,6 @@ For demo purposes, you can log in with the following credentials:
 - Course catalog management
 - Report generation
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## Acknowledgements
 
 - Icons from [React Icons](https://react-icons.github.io/react-icons/)
